@@ -7,13 +7,16 @@ from pymongo import MongoClient
 def download_movies():
     movies = []
     key="94feff88"
-    for i in range(1,11):
+    for i in range(1,200):
         id = f'tt{i:07d}'
+        print(id)
         params = {"i":id,"apikey":key}
         respond = requests.get('http://www.omdbapi.com/',params=params)
         if respond.status_code==200:
             movie = respond.json()
+            genres = [genre.strip() for genre in movie['Genre'].split(",")]
             del movie['Response']
+            movie['Genre'] = genres
             movies.append(movie)
     return movies
 
@@ -28,7 +31,8 @@ def insert_movies(db,movies):
     return respond
 
 if __name__ == "__main__":
-    db = get_db()
     movies = download_movies()
+    # print(movies)
+    db = get_db()
     response = insert_movies(db,movies)
     print(response)

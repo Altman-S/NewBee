@@ -36,7 +36,7 @@ def create_app(test_config=None):
     @app.route('/hello')
     def hello():
         return 'Hello, World!'
-    
+
     app.json_encoder = MyEncoder
 
     from API.movies import movies_api
