@@ -1,10 +1,19 @@
 from flask import Blueprint, request, jsonify
 from API.db import get_movie_by_id, get_movies
+from flask_cors import CORS
 
-movies_api = Blueprint('movies_api', __name__, url_prefix='/movies/api')
+movies_api = Blueprint('movies_api', __name__, url_prefix='/api/movies')
 
+"""
+In a production environment, you should only allow cross-origin requests from the 
+domain where the front-end application is hosted. 
+Refer to the Flask-CORS documentation for more info on this
+"""
+CORS(movies_api)
 
 # get all movies on the home page
+
+
 @movies_api.route('/', methods=['GET'])
 def api_get_movies():
     movies = get_movies()

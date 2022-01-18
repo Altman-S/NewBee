@@ -2,6 +2,8 @@ from flask import Flask
 from bson.json_util import ObjectId
 import json
 import os
+from flask_cors import CORS
+
 
 
 class MyEncoder(json.JSONEncoder):
@@ -19,6 +21,13 @@ def create_app(test_config=None):
         SECRET_KEY='dev',
     )
 
+    """
+    In a production environment, you should only allow cross-origin requests from the 
+    domain where the front-end application is hosted. 
+    Refer to the Flask-CORS documentation for more info on this
+    """
+    CORS(app)
+
     if test_config is None:
         # load the instance config, if it exists, when not testing
         app.config.from_pyfile('config.py', silent=True)
@@ -33,9 +42,9 @@ def create_app(test_config=None):
         pass
 
     # a simple page that says hello
-    @app.route('/hello')
+    @app.route('/')
     def hello():
-        return 'Hello, World!'
+        return 'Hello!'
 
     app.json_encoder = MyEncoder
 
