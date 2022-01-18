@@ -1,34 +1,10 @@
 <template>
-  <movie-card-container :movies="movies"></movie-card-container>
-  <!-- <MovieCard :title="title" :imgurl="imgurl"></MovieCard> -->
+  <div id="nav">
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link>
+  </div>
+  <router-view/>
 </template>
-
-<script>
-import MovieCardContainer from "./components/MovieCardContainer.vue";
-import MovieCard from "./components/MovieCard.vue";
-
-export default {
-  name: "App",
-  components: {
-    MovieCardContainer,
-    MovieCard,
-  },
-  created: function () {
-    fetch("/api/movies/")
-      .then((response) => response.json())
-      .then((data) => {
-        const movies = data.movies;
-        console.log(movies.length);
-        this.movies = movies;
-      });
-  },
-  data: function () {
-    return {
-      movies: null,
-    };
-  },
-};
-</script>
 
 <style>
 #app {
@@ -37,6 +13,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
