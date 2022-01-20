@@ -16,7 +16,8 @@ CORS(movies_api)
 
 @movies_api.route('/', methods=['GET'])
 def api_get_movies():
-    movies = get_movies()
+    DEFAULT_MOVIES_PER_PAGE = 20
+    movies = get_movies(None, page=0, movies_per_page=DEFAULT_MOVIES_PER_PAGE)
     response = {
         "movies": movies
     }

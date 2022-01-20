@@ -15,10 +15,11 @@ def get_db():
 db = LocalProxy(get_db)
 
 
-def get_movies():
+def get_movies(filters, page, movies_per_page):
     query = {}
     cursor = db.movies.find(query)
-    return list(cursor)
+    movies = cursor.skip(page*movies_per_page).limit(movies_per_page)
+    return list(movies)
 
 
 def get_movie_by_id(id):
