@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="container">
     This is home page
     <movie-card-container :movies="movies"></movie-card-container>
   </div>
@@ -10,7 +10,7 @@ import MovieCardContainer from "../components/MovieCardContainer.vue";
 import MovieCard from "../components/MovieCard.vue";
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
     MovieCardContainer,
     MovieCard,

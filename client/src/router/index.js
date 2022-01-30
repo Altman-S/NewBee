@@ -7,12 +7,18 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    meta:{
+      keepAlive:true,
+    }
   },
   {
     path: '/movie/:id',
-    name: 'Movie',
+    name: 'MovieInfoPage',
     component: MovieInfoPage,
-    props:true
+    props:true,
+    meta:{
+      keepAlive:false
+    }
   }
 ]
 

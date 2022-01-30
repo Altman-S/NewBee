@@ -1,16 +1,15 @@
 <template>
-  <div class="movieCard">
-    <a :href="href">
-      <img :src="movie.Poster" :alt="movie.title" />
-      {{movie.Title}}
-    </a>
-    <!-- <router-link :to="'/movie/'+movie.imdbID" tag="div">{{ movie.Title }}</router-link> -->
-    <!-- <router-link :to="'/movie/' + movie.imdbID" custom>
-      <button>
-        {{ movie.Title }}
-      </button>
-    </router-link> -->
-  </div>
+  <a :href="href" class="card-text">
+    <div class="card h-100 w-75">
+      <img :src="movie.Poster" class="card-img-top" :alt="movie.Title" />
+      <div class="card-body">
+        <h5 class="card-title">{{ movie.Title }}</h5>
+        <p class="card-text">
+          {{ movie.Year }}
+        </p>
+      </div>
+    </div>
+  </a>
 </template>
 
 <script>
@@ -24,7 +23,20 @@ export default {
 </script>
 
 <style scoped>
-.movieCard {
-  background-color: aqua;
+/* img {
+  vertical-align: middle;
+  border-style: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+} */
+.card-text {
+  text-decoration: none;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 20vw;
+  object-fit: cover;
 }
 </style>

@@ -5,7 +5,6 @@ import os
 from flask_cors import CORS
 
 
-
 class MyEncoder(json.JSONEncoder):
 
     def default(self, obj):
