@@ -1,11 +1,4 @@
 <template>
-  <!-- <ul>
-    <li v-for="movie in movies" :key="movie.imdbID">
-      <router-link :to="'/movie/' + movie.imdbID" custom v-slot="{href}">
-        <movie-card :movie="movie" :href="href"></movie-card>
-      </router-link>
-    </li>
-  </ul> -->
   <div class="row row-cols-1 row-cols-md-4 g-4">
     <div class="col" v-for="movie in movies" :key="movie.imdbID">
       <router-link :to="'/movie/' + movie.imdbID" custom v-slot="{ href }">

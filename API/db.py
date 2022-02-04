@@ -19,7 +19,8 @@ def get_movies(filters, page, movies_per_page):
     query = {}
     cursor = db.movies.find(query)
     movies = cursor.skip(page*movies_per_page).limit(movies_per_page)
-    return list(movies)
+    total_number = db.movies.count()
+    return list(movies),total_number
 
 
 def get_movie_by_id(id):

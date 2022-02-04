@@ -17,9 +17,14 @@ CORS(movies_api)
 @movies_api.route('/', methods=['GET'])
 def api_get_movies():
     DEFAULT_MOVIES_PER_PAGE = 20
-    movies = get_movies(None, page=0, movies_per_page=DEFAULT_MOVIES_PER_PAGE)
+    page = int(request.args.get('page', 1))
+    print(page)
+    movies, total_number = get_movies(
+        None, page=page, movies_per_page=DEFAULT_MOVIES_PER_PAGE)
     response = {
-        "movies": movies
+        "movies": movies,
+        'total_number': total_number,
+        'current_page': page
     }
     return jsonify(response), 200
 

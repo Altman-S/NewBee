@@ -1,6 +1,6 @@
 <template>
   <a :href="href" class="card-text">
-    <div class="card h-100 w-75">
+    <div class="card h-100 w-100">
       <img :src="movie.Poster" class="card-img-top" :alt="movie.Title" />
       <div class="card-body">
         <h5 class="card-title">{{ movie.Title }}</h5>
