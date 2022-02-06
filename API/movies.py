@@ -12,11 +12,11 @@ Refer to the Flask-CORS documentation for more info on this
 CORS(movies_api)
 
 # get all movies on the home page
+DEFAULT_MOVIES_PER_PAGE = 20
 
 
 @movies_api.route('/', methods=['GET'])
 def api_get_movies():
-    DEFAULT_MOVIES_PER_PAGE = 20
     page = int(request.args.get('page', 1))
     print(page)
     movies, total_number = get_movies(
@@ -33,16 +33,25 @@ def api_get_movies():
 @movies_api.route('/search', methods=['GET'])
 def api_search_movie():
     filters = {}
-    title = request.args.get('title')
-    casts = request.args.getlist('cast')
-    genres = request.args.getlist('genre')
+    page = int(request.args.get('page', 1))
+    all = request.args.get('All')
+    title = request.args.get('Title')
+    celes = request.args.get('Celebrity')
+    genre = request.args.getlist('Genre')
     if title:
         filters['title'] = title
-    if casts:
-        filters['casts'] = casts
-    if genres:
-        filters['genres'] = genres
-    return jsonify(filters), 200
+    if celes:
+        filters['celes'] = celes
+    if genre:
+        filters['genre'] = genre
+    movies, total_number = get_movies(
+        filters, page=page, movies_per_page=DEFAULT_MOVIES_PER_PAGE)
+    response = {
+        "movies": movies,
+        'total_number': total_number,
+        'current_page': page
+    }
+    return jsonify(response), 200
 
 
 # get movie by ID

@@ -22,7 +22,12 @@ export default {
     Pagination,
   },
   created: function () {
-    fetch("/api/movies/")
+    const query = this.$route.query;
+    for (let key in query) {
+      this.searchURL += key + "=" + query[key];
+    }
+    this.searchURL += "&page=1";
+    fetch(this.api + this.searchURL)
       .then((response) => response.json())
       .then((data) => {
         const movies = data.movies;
@@ -34,9 +39,11 @@ export default {
   },
   data: function () {
     return {
+      api: "api/movies/search",
       movies: null,
       total_number: null,
       current_page: null,
+      searchURL: "?",
       movies_per_page: 20,
     };
   },
@@ -44,14 +51,13 @@ export default {
     change_page(page) {
       window.scrollTo(0, 0);
       console.log(page);
-      const url = "api/movies/?page=" + page;
-      fetch(url)
+      this.searchURL += "&page=" + page;
+      fetch(this.searchURL)
         .then((response) => response.json())
         .then((data) => {
           const movies = data.movies;
           console.log(movies.length);
           this.movies = movies;
-          this.total_number = data.total_number;
           this.current_page = data.current_page;
         });
     },

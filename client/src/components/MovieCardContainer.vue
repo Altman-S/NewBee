@@ -20,9 +20,7 @@ export default {
     MovieCard,
   },
   data: function () {
-    return {
-      back_end_url: "http://127.0.0.1:5000/api/movies/",
-    };
+    return {};
   },
 };
 </script>
