@@ -7,6 +7,8 @@ page_nxt = "ref_=adv_nxt"
 base_url = "https://www.imdb.com/search/title/?title_type=feature"
 start_url = "start="
 
+# example = "https://www.imdb.com/search/title/?groups=top_250&sort=user_rating,desc"
+
 
 # Get the url of each page (100 pages in all)
 def get_pop_page_url(page_num):
