@@ -1,9 +1,4 @@
-import requests
-import logging
-from fake_useragent import UserAgent
-from get_top250_tconst import random_ua, scrape_html
-import json
-import sys
+from functions import *
 
 
 # Read top250_tconst.txt
@@ -13,7 +8,7 @@ with open('data/top250_tconst.txt', 'r') as f:
         tconst_list.extend([line.strip('\n')])
 
 
-a = 'http://www.omdbapi.com/?i=tt3896198&apikey=94feff88'
+a_example = 'http://www.omdbapi.com/?i=tt3896198&apikey=94feff88'
 base_url = 'http://www.omdbapi.com/'
 tconst_url = '?i='
 apikey_url = 'apikey=94feff88'
@@ -23,7 +18,7 @@ def get_info_url(tt):
     return base_url + tconst_url + tt + '&' + apikey_url
 
 
-def get_info():
+def get_top250_info():
     info_list = []
     for i in range(len(tconst_list)):
         movie_info = scrape_html(get_info_url(tconst_list[i]))
@@ -32,8 +27,8 @@ def get_info():
     return info_list
 
 
-def output_info():
-    info_list = get_info()
+def output_top250_info():
+    info_list = get_top250_info()
 
     # clear file
     with open('data/top250_info.txt', 'w') as f:
@@ -47,5 +42,5 @@ def output_info():
 
 
 if __name__ == '__main__':
-    output_info()
+    output_top250_info()
 

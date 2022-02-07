@@ -26,7 +26,7 @@ def download_movies():
 
 def get_top250_movies():
     top250 = []
-    with open('./data-250/data/top250_tconst.txt', 'r') as reader:
+    with open('data-top/data/top250_tconst.txt', 'r') as reader:
         for line in reader:
             tconst = line.strip()
             params = {"i": tconst, "apikey": key}
