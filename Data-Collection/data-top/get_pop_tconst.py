@@ -7,7 +7,7 @@ page_nxt = "ref_=adv_nxt"
 base_url = "https://www.imdb.com/search/title/?title_type=feature"
 start_url = "start="
 
-# example = "https://www.imdb.com/search/title/?groups=top_250&sort=user_rating,desc"
+# example = "https://www.imdb.com/search/title/?title_type=feature&year=2010-01-01,2021-12-31&ref_=adv_prv"
 
 
 # Get the url of each page (100 pages in all)
@@ -49,4 +49,4 @@ def output_pop_tconst():
 
 
 if __name__ == '__main__':
-    print(output_pop_tconst())
+    output_pop_tconst()
