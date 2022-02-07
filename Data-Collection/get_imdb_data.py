@@ -2,23 +2,25 @@ from json.tool import main
 from turtle import down
 import requests
 from pymongo import MongoClient
+import pandas
 
 key = "94feff88"
 
 
 def download_movies():
     movies = []
-    for i in range(1, 200):
+    for i in range(3000000, 3050000):
         id = f'tt{i:07d}'
-        print(id)
         params = {"i": id, "apikey": key}
         respond = requests.get('http://www.omdbapi.com/', params=params)
         if respond.status_code == 200:
             movie = respond.json()
-            genres = [genre.strip() for genre in movie['Genre'].split(",")]
-            del movie['Response']
-            movie['Genre'] = genres
-            movies.append(movie)
+            if movie['Response'] == 'True':
+                print(id)
+                genres = [genre.strip() for genre in movie['Genre'].split(",")]
+                del movie['Response']
+                movie['Genre'] = genres
+                movies.append(movie)
     return movies
 
 
@@ -56,10 +58,10 @@ def insert_top250(db, top250):
 
 
 if __name__ == "__main__":
-    top250 = get_top250_movies()
-    # movies = download_movies()
+    # top250 = get_top250_movies()
+    movies = download_movies()
     # print(movies)
     db = get_db()
-    respond = insert_top250(db, top250)
-    # respond = insert_movies(db,movies)
+    # respond = insert_top250(db, top250)
+    respond = insert_movies(db, movies)
     print(respond)
