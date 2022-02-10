@@ -2,7 +2,7 @@
   <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
       <li class="page-item" v-if="page_number > 1">
-        <button class="page-link" @click="change_paged(page_number - 1)">
+        <button class="page-link" @click="change_page(page_number - 1)">
           Previous
         </button>
       </li>

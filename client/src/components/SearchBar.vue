@@ -65,7 +65,6 @@ export default {
   methods: {
     search() {
       const searchURL = "/home?" + this.searchFilter + "=" + this.searchText;
-      console.log(searchURL);
       this.$router.push(searchURL);
     },
   },

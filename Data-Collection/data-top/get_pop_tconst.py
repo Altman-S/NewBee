@@ -1,4 +1,5 @@
 from functions import *
+import json
 
 # Prepare for page url (popular movies)
 type_list = ["year=2010-01-01,2020-12-31"]
@@ -72,7 +73,7 @@ def output_pop_info():
     # write tconst to file
     file = open('data/pop_info.txt', 'a')
     for i in range(len(info_list)):
-        s = str(info_list[i]) + "\n"
+        s = json.dumps(info_list[i]) + "\n"
         file.write(s)
     file.close()
 
