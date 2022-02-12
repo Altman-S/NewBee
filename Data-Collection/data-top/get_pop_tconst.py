@@ -2,7 +2,7 @@ from functions import *
 import json
 
 # Prepare for page url (popular movies)
-type_list = ["year=2010-01-01,2020-12-31"]
+type_list = ["year=2010-01-01,2021-12-31"]
 page_pre = "ref_=adv_prv"
 page_nxt = "ref_=adv_nxt"
 base_url = "https://www.imdb.com/search/title/?title_type=feature"
