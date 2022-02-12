@@ -43,24 +43,22 @@ def get_tconst(url):
     return page_tconst_list
 
 
-# get all the information of each movie in a single page
-def get_info50(url):
-    page_info50_list = []
-    html_text = scrape_html(url)
+# get the Year of movies
+def get_year(page):
+    return re.findall('<span class="lister-item-year text-muted unbold">(.*?)</span>', page)
 
-    # movie_block = re.findall('<span class="lister-item-year text-muted unbold">(.*?)</span>', html_text)
 
-    # get the Year of movies
-    page_year = re.findall('<span class="lister-item-year text-muted unbold">(.*?)</span>', html_text)
+# get Title, Poster and imdbID of movies   0: Title  2: Poster  3: imdbID
+def get_info1(page):
+    return re.findall('> <img alt="(.*?)"\nclass="(.*?)"\nloadlate="(.*?)"\ndata-tconst="(.*?)"\nheight="(.*?)"\nsrc="(.*?)"\nwidth="(.*?)" />', page)
 
-    # get Title, Poster and imdbID of movies   0: Title  2: Poster  3: imdbID
-    page_info1 = re.findall('> <img alt="(.*?)"\nclass="(.*?)"\nloadlate="(.*?)"\ndata-tconst="(.*?)"\nheight="(.*?)"\nsrc="(.*?)"\nwidth="(.*?)" />', html_text)
 
-    # get Runtime of movies
-    # page_runtime = re.findall('<span class="runtime">(.*?)</span>', html_text)
+# get Runtime of movies
+def get_runtime(page):
     page_runtime_reg = r'<p class="text-muted ">(.*?)<span class="genre">'
     page_runtime_content = re.compile(page_runtime_reg, re.DOTALL)
-    page_runtime = page_runtime_content.findall(html_text)
+    page_runtime = page_runtime_content.findall(page)
+
     for i in range(len(page_runtime)):
         if "runtime" in page_runtime[i]:
             a = re.findall('<span class="runtime">(.*?)</span>', page_runtime[i])
@@ -68,22 +66,31 @@ def get_info50(url):
         else:
             page_runtime[i] = ''
     if len(page_runtime) != 50:
-        for i in range(50-len(page_runtime)):
+        for i in range(50 - len(page_runtime)):
             page_runtime.extend(["N/A"])
 
-    # get Genre of movies
-    page_genre = re.findall('<span class="genre">\n(.*?)</span>', html_text)
+    return page_runtime
+
+
+# get Genre of movies
+def get_genre(page):
+    page_genre = re.findall('<span class="genre">\n(.*?)</span>', page)
+
     for i in range(len(page_genre)):
         page_genre[i] = page_genre[i].strip()
     if len(page_genre) != 50:
-        for i in range(50-len(page_genre)):
+        for i in range(50 - len(page_genre)):
             page_genre.extend(["N/A"])
 
-    # get imdbRating of movies
-    # page_rating = re.findall('<div class="inline-block ratings-imdb-rating" name="ir" data-value="(.*?)">', html_text)
+    return page_genre
+
+
+# get imdbRating of movies
+def get_rating(page):
     page_rating1_reg = r'<div class="ratings-bar">(.*?)div class="inline-block ratings-(.*?)-rating"(.*?)>'
     page_rating1_content = re.compile(page_rating1_reg, re.DOTALL)
-    page_rating1 = page_rating1_content.findall(html_text)
+    page_rating1 = page_rating1_content.findall(page)
+
     page_rating = []
     for i in range(len(page_rating1)):
         if "data-value" in page_rating1[i][2]:
@@ -92,22 +99,30 @@ def get_info50(url):
         else:
             page_rating.extend(["N/A"])
     if len(page_rating) != 50:
-        for i in range(50-len(page_rating)):
+        for i in range(50 - len(page_rating)):
             page_rating.extend(["N/A"])
 
-    # get Plot of movies
+    return page_rating
+
+
+# get Plot of movies
+def get_plot(page):
     page_plot_reg = r'<p class="text-muted">\n(.*?)</p>'
     page_plot_content = re.compile(page_plot_reg, re.DOTALL)
-    page_plot = page_plot_content.findall(html_text)
-    # page_plot = re.findall('<p class="text-muted">\n(.*?)</p>', html_text)
+    page_plot = page_plot_content.findall(page)
     if len(page_plot) != 50:
-        for i in range(50-len(page_plot)):
+        for i in range(50 - len(page_plot)):
             page_plot.extend(["N/A"])
 
-    # get imdbVotes of movies
+    return page_plot
+
+
+# get imdbVotes of movies
+def get_votes(page):
     page_votes1_reg = r'Director(.*?):(.*?)</p>(.*?)</div>'
     page_votes1_content = re.compile(page_votes1_reg, re.DOTALL)
-    page_votes1 = page_votes1_content.findall(html_text)
+    page_votes1 = page_votes1_content.findall(page)
+
     page_votes = []
     page_votes2_reg = r'<span class="text-muted">Votes:</span>(.*?)<span name="nv" data-value="(.*?)">(.*?)</span>'
     page_votes2_content = re.compile(page_votes2_reg, re.DOTALL)
@@ -119,21 +134,18 @@ def get_info50(url):
         else:
             page_votes.extend(["N/A"])
     if len(page_votes) != 50:
-        for i in range(50-len(page_votes)):
+        for i in range(50 - len(page_votes)):
             page_votes.extend(["N/A"])
 
-    # page_director = re.findall('Director(.*?):\n<a href="(.*?)"\n>(.*?)</a>(.*?)', html_text)
-    # page_director_reg = r'Director(.*?):\n<a href="(.*?)"\n>(.*?)</a>'
-    # page_director_content = re.compile(page_director_reg, re.DOTALL)
-    # page_director = page_director_content.findall(html_text)
-    # if len(page_director) != 50:
-    #     for i in range(50-len(page_director)):
-    #         page_director.extend(["N/A"])
+    return page_votes
 
-    # get Director of movies
+
+# get Director of movies
+def get_director(page):
     page_director1_reg = r'    Director(.*?):\n(.*?)<span class="ghost">|</span>    '
     page_director1_content = re.compile(page_director1_reg, re.DOTALL)
-    page_director1 = page_director1_content.findall(html_text)
+    page_director1 = page_director1_content.findall(page)
+
     directors_str = []
     for i in range(len(page_director1)):
         directors_str.extend([page_director1[i][1]])
@@ -152,13 +164,18 @@ def get_info50(url):
         if page_director2[i] != '':
             page_director.extend([page_director2[i]])
     if len(page_director) != 50:
-        for i in range(50-len(page_director)):
+        for i in range(50 - len(page_director)):
             page_director.extend(["N/A"])
 
-    # get Actors of movies
+    return page_director
+
+
+# get Actors of movies
+def get_actor(page):
     page_actor1_reg = r'    Star(.*?):\n(.*?)</p>'
     page_actor1_content = re.compile(page_actor1_reg, re.DOTALL)
-    page_actor1 = page_actor1_content.findall(html_text)
+    page_actor1 = page_actor1_content.findall(page)
+
     actors_str = []
     for i in range(len(page_actor1)):
         actors_str.extend([page_actor1[i][1]])
@@ -173,8 +190,43 @@ def get_info50(url):
                 actor_str += str(actor[j])
         page_actor.extend([actor_str])
     if len(page_actor) != 50:
-        for i in range(50-len(page_actor)):
+        for i in range(50 - len(page_actor)):
             page_actor.extend(["N/A"])
+
+    return page_actor
+
+
+# get all the information of each movie in a single page
+def get_info50(url):
+    page_info50_list = []
+    html_text = scrape_html(url)
+
+    # get the Year of movies
+    page_year = get_year(html_text)
+
+    # get Title, Poster and imdbID of movies   0: Title  2: Poster  3: imdbID
+    page_info1 = get_info1(html_text)
+
+    # get Runtime of movies
+    page_runtime = get_runtime(html_text)
+
+    # get Genre of movies
+    page_genre = get_genre(html_text)
+
+    # get imdbRating of movies
+    page_rating = get_rating(html_text)
+
+    # get Plot of movies
+    page_plot = get_plot(html_text)
+
+    # get imdbVotes of movies
+    page_votes = get_votes(html_text)
+
+    # get Director of movies
+    page_director = get_director(html_text)
+
+    # get Actors of movies
+    page_actor = get_actor(html_text)
 
     for i in range(50):
         page_dict = {}
