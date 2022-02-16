@@ -72,3 +72,4 @@ if __name__ == "__main__":
     db = get_db()
     respond = insert_movies(db, movies)
     print(respond)
+    

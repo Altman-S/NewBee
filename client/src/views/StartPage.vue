@@ -1,9 +1,9 @@
 <template>
   <div class="start-page">
-    <div class="">Logo</div>
-    <div class="position-absolute top-50 start-50 translate-middle">
+    <div class="logo"><img src="../../public/logos/MIO.png" alt=""></div>
+    <!-- <div class="position-absolute top-50 start-50 translate-middle"> -->
       <search-bar></search-bar>
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -25,10 +25,13 @@ export default {
   background-color: #343a40;
   border-radius: 0.25rem;
 }
-.position-relative-example div {
+.start-page{
+  background-color: #1e3799 !important;
+}
+/* .position-relative-example div {
   width: 2em;
   height: 2em;
   background-color: #343a40;
   border-radius: 0.25rem;
-}
+} */
 </style>

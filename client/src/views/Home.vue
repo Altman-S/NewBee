@@ -7,7 +7,7 @@
       <movie-card-container :movies="movies"></movie-card-container>
       <pagination
         :total_page="total_page"
-        :page_number="current_page"
+        :current_page="current_page"
         @changePage="change_page($event)"
       ></pagination>
     </div>
