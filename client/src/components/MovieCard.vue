@@ -15,7 +15,7 @@
             <span>({{ movie.Year }})</span>
           </h5>
           <p class="card-text">
-            {{ movie.Runtime}}<span v-for="genre in movie.Genre"> | {{ genre }}</span>
+            {{ movie.Runtime ? movie.Runtime : 'N/A'}} <span v-for="genre in movie.Genre.split(',')"> | {{ genre }}</span>
           </p>
           <p class="card-text">
             {{ movie.Plot == "N/A" ? "No Plot" : movie.Plot }}
@@ -32,6 +32,9 @@ export default {
   props: {
     href: String,
     movie: Object,
+  },
+  created: function () {
+    console.log(this.movie.Genre.split(','));
   },
 };
 </script>
