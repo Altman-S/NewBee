@@ -49,10 +49,16 @@ def get_movies(filters, page, movies_per_page):
     return list(movies), total_num_movies
 
 
-def get_movie_by_id(id):
+def get_movie_by_imdbID(id):
     try:
         query = {"imdbID": id}
         movie = db.movies.find_one(query)
         return movie
     except Exception as e:
         return {}
+
+
+def get_movies_by_oid(oid_list):
+    oid_list = [ObjectId(i) for i in oid_list]
+    movies = db.movies.find({'_id':{'$in':oid_list}})
+    return list(movies)
