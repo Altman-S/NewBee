@@ -62,3 +62,4 @@ def get_movies_by_oid(oid_list):
     oid_list = [ObjectId(i) for i in oid_list]
     movies = db.movies.find({'_id':{'$in':oid_list}})
     return list(movies)
+
