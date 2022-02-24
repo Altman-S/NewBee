@@ -81,4 +81,5 @@ def api_get_movie_by_id(id):
 def get_oid_from_BM25(filters):
     if 'title' in filters:
         oid_list = get_movies_by_title(filters['title'])
+    print(oid_list)
     return oid_list
