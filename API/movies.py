@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
-from API.db import get_movie_by_id, get_movies
+from API.db import get_movie_by_imdbID, get_movies, get_movies_by_oid
 from flask_cors import CORS
+from BM25 import *
 
 movies_api = Blueprint('movies_api', __name__, url_prefix='/api/movies')
 
@@ -38,14 +39,17 @@ def api_search_movie():
     title = request.args.get('Title')
     celes = request.args.get('Celebrity')
     genre = request.args.getlist('Genre')
+    if all:
+        filters['all'] = all
     if title:
         filters['title'] = title
     if celes:
         filters['celes'] = celes
     if genre:
         filters['genre'] = genre
-    movies, total_number = get_movies(
-        filters, page=page, movies_per_page=DEFAULT_MOVIES_PER_PAGE)
+    oid_list = get_oid_from_BM25(filters)
+    movies, total_number = get_movies_by_oid(oid_list, page, DEFAULT_MOVIES_PER_PAGE)
+    # movies, total_number = get_movies(filters, page=page, movies_per_page=DEFAULT_MOVIES_PER_PAGE)
     response = {
         "movies": movies,
         'total_number': total_number,
@@ -57,7 +61,7 @@ def api_search_movie():
 # get movie by ID
 @movies_api.route('/id/<id>', methods=['GET'])
 def api_get_movie_by_id(id):
-    movie = get_movie_by_id(id)
+    movie = get_movie_by_imdbID(id)
     if movie is None:
         return jsonify({
             "error": "Not found"
@@ -72,3 +76,9 @@ def api_get_movie_by_id(id):
                 "movie": movie,
             }
         ), 200
+
+
+def get_oid_from_BM25(filters):
+    if 'title' in filters:
+        oid_list = get_movies_by_title(filters['title'])
+    return oid_list
