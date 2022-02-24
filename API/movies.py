@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from API.db import get_movie_by_id, get_movies
+from API.db import get_movie_by_imdbID, get_movies
 from flask_cors import CORS
 
 movies_api = Blueprint('movies_api', __name__, url_prefix='/api/movies')
@@ -57,7 +57,7 @@ def api_search_movie():
 # get movie by ID
 @movies_api.route('/id/<id>', methods=['GET'])
 def api_get_movie_by_id(id):
-    movie = get_movie_by_id(id)
+    movie = get_movie_by_imdbID(id)
     if movie is None:
         return jsonify({
             "error": "Not found"
