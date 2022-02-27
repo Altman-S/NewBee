@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import MovieInfoPage from '../views/MovieInfoPage.vue'
 import StartPage from '../views/StartPage.vue'
+import ErrorPage from '../views/ErrorPage.vue'
 
 
 const routes = [
@@ -26,6 +27,11 @@ const routes = [
     meta: {
       keepAlive: false
     }
+  },
+  {
+    path: '/errorpage',
+    name: 'ErrorPage',
+    component: ErrorPage,
   }
 ]
 

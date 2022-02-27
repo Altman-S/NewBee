@@ -1,5 +1,8 @@
 <template>
   <div id="home">
+    <div class="bg">
+      <img src="../../public/logos/background.jpg" width="100%" height="100%" alt="" />
+    </div>
     <div class="header">
       <search-bar></search-bar>
     </div>
@@ -97,11 +100,19 @@ export default {
 </script>
 
 <style scoped>
-#home {
-  background-color: blue;
-}
+/*#home {*/
+/*  background-color: blue;*/
+/*}*/
+
 .container {
   padding-bottom: 20px;
   background-color: white;
+}
+
+.bg {
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  position: fixed;
 }
 </style>

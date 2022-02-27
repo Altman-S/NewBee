@@ -19,8 +19,6 @@
       </div>
     </div>
     <search-bar></search-bar>
-
-
   </div>
 </template>
 
