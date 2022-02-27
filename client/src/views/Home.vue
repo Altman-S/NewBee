@@ -63,7 +63,8 @@ export default {
       this.search_params["page"] = page;
       const searchURL = new URLSearchParams(this.search_params);
       console.log(`${this.api}?${searchURL}`);
-      fetch(`${this.api}?${searchURL}`)
+      // fetch(`${this.api}?${searchURL}`)
+      fetch(`http://127.0.0.1:5000/api/movies/search?${searchURL}`)
         .then((response) => response.json())
         .then((data) => {
           const movies = data.movies;
@@ -75,7 +76,8 @@ export default {
     search() {
       const searchURL = new URLSearchParams(this.search_params);
       console.log(`${this.api}?${searchURL}`);
-      fetch(`${this.api}?${searchURL}`)
+      // fetch(`${this.api}?${searchURL}`)
+      fetch(`http://127.0.0.1:5000/api/movies/search?${searchURL}`)
         .then((response) => response.json())
         .then((data) => {
           const movies = data.movies;

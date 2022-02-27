@@ -1,4 +1,5 @@
 <template>
+  <div class="abc">
   <div class="container d-flex justify-content-center">
     <div class="input-group mb-3">
       <div class="dropdown">
@@ -28,10 +29,7 @@
             </button>
           </li>
           <li>
-            <button
-              class="dropdown-item"
-              @click="this.searchFilter = 'Celebrity'"
-            >
+            <button class="dropdown-item" @click="this.searchFilter = 'Celebrity'">
               Celebrity
             </button>
           </li>
@@ -50,6 +48,7 @@
         </button>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -72,7 +71,17 @@ export default {
 </script>
 
 <style scoped>
-#searchBar {
-  width: 400px !important;
+/*#searchBar {*/
+/*  width: 400px !important;*/
+/*}*/
+
+.abc {
+  left: 28%;
+  top:50%;
+  height: 20%;
+  width: 44%;
+  z-index: 1;
+  position: fixed;
 }
+
 </style>
