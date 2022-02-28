@@ -1,31 +1,31 @@
 <template>
-<!--  <div class="start-page">-->
-<!--    <div class="background"><img src="../../public/logos/background.jpg" alt=""></div>-->
-<!--    <div class="logo"><img src="../../public/logos/logo.png" alt=""></div>-->
-<!--    &lt;!&ndash; <div class="position-absolute top-50 start-50 translate-middle"> &ndash;&gt;-->
-<!--      <search-bar></search-bar>-->
-<!--    &lt;!&ndash; </div> &ndash;&gt;-->
-<!--  </div>-->
   <div>
     <div class="background">
-      <img src="../../public/logos/background.jpg" width="100%" height="100%" alt="" />
+      <img
+        class="unselectable"
+        src="../../public/logos/background.jpg"
+        width="100%"
+        height="100%"
+        alt=""
+      />
     </div>
     <div class="logo">
-      <img src="../../public/logos/logo.png" width="100%" height="100%" alt="">
+      <img
+        src="../../public/logos/logo.png"
+        width="100%"
+        height="100%"
+        alt=""
+      />
     </div>
     <div class="abc">
-      <div style="">
-<!--        <search-bar></search-bar>-->
-      </div>
+      <!-- <search-bar></search-bar> -->
     </div>
     <search-bar></search-bar>
-
-
   </div>
 </template>
 
 <script>
-import SearchBar from "../components/SearchBar.vue";
+import SearchBar from "../components/SearchBarStartPage.vue";
 
 export default {
   name: "Start Page",
@@ -43,35 +43,37 @@ export default {
   border-radius: 0.25rem;
 }
 
-.background{
+.background {
   width: 100%;
   height: 100%;
   z-index: -1;
   position: fixed;
 }
 
-.logo{
+.logo {
   margin: 0 auto;
-  left:35%;
+  left: 35%;
   top: 23%;
   height: 26%;
   width: 28%;
   position: fixed;
 }
 
-.abc{
-  left: 28%;
-  top: 30%;
-  height: 20%;
-  width: 50%;
-  z-index: 1;
-  position: fixed;
+.abc {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  /* background-color: aquamarine; */
 }
 
-/* .position-relative-example div {
-  width: 2em;
-  height: 2em;
-  background-color: #343a40;
-  border-radius: 0.25rem;
-} */
+.unselectable {
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
 </style>

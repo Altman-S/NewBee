@@ -60,13 +60,6 @@ def get_index(file_name):
     return Title_dict, People_dict, Year_dict, Genre_dict
 
 
-def Preprocessing(data):
-    return
-
-#Title_dict, People_dict, Year_dict, Genre_dict, votes, ratings = get_index('movies.json')
-# print(votes)
-
-
 def get_score(file_name):
     votes = []
     ratings = []
@@ -127,26 +120,20 @@ def get_score(file_name):
                 score2 = 0
         score = score1 + score2
         dict_score[movie['_id']['$oid']] = score
-
-    # print(votes)
-    # print(minvote)
-    # print(meanvote)
     return dict_score
-# print(Year_dict.keys())
 
 
-def Retrieval(query, dict_score):
+# def Retrieval(query, dict_score):
+#     dict_rank = {}
+#     ids = Year_dict[query]
+#     # print(ids)
+#     rank_dict = {}
+#     for i in range(len(ids)):
 
-    dict_rank = {}
-    ids = Year_dict[query]
-    # print(ids)
-    rank_dict = {}
-    for i in range(len(ids)):
+#         dict_rank[ids[i]] = dict_score[ids[i]]
 
-        dict_rank[ids[i]] = dict_score[ids[i]]
-
-    dict_rank = sorted(dict_rank.items(), key=lambda x: x[1], reverse=True)
-    return dict_rank
+#     dict_rank = sorted(dict_rank.items(), key=lambda x: x[1], reverse=True)
+#     return dict_rank
 
 
 def Preprocess(query):
@@ -181,8 +168,3 @@ def get_title_dict(file_name):
         if movie_id not in title_dict.keys():
             title_dict[movie_id] = title_text
     return title_dict
-
-
-Title_dict, People_dict, Year_dict, Genre_dict = get_index('movies.json')
-dict_score = get_score('movies.json')
-dict_rank = Retrieval('2011', dict_score)

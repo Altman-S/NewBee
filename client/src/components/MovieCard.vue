@@ -15,7 +15,8 @@
             <span>({{ movie.Year }})</span>
           </h5>
           <p class="card-text">
-            {{ movie.Runtime ? movie.Runtime : 'N/A'}} <span v-for="genre in movie.Genre.split(',')"> | {{ genre }}</span>
+            {{ movie.Runtime ? movie.Runtime : "N/A" }}
+            <span v-for="genre in movie.Genre.split(',')"> | {{ genre }}</span>
           </p>
           <p class="card-text">
             {{ movie.Plot == "N/A" ? "No Plot" : movie.Plot }}
@@ -33,9 +34,6 @@ export default {
     href: String,
     movie: Object,
   },
-  created: function () {
-    console.log(this.movie.Genre.split(','));
-  },
 };
 </script>
 
@@ -47,7 +45,7 @@ img {
   object-fit: cover;
 }
 .card {
-  background-color: rgba(37, 39, 39, 0.404);
+  background-color: rgba(150, 165, 179, 0.8);
 }
 
 .card-text {

@@ -1,5 +1,4 @@
 <template>
-  <div class="abc">
   <div class="container d-flex justify-content-center">
     <div class="input-group mb-3">
       <div class="dropdown">
@@ -13,24 +12,9 @@
           {{ searchFilter }}
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li>
-            <button class="dropdown-item" @click="this.searchFilter = 'All'">
-              All
-            </button>
-          </li>
-          <li>
-            <button class="dropdown-item" @click="this.searchFilter = 'Title'">
-              Title
-            </button>
-          </li>
-          <li>
-            <button class="dropdown-item" @click="this.searchFilter = 'Genre'">
-              Genre
-            </button>
-          </li>
-          <li>
-            <button class="dropdown-item" @click="this.searchFilter = 'Celebrity'">
-              Celebrity
+          <li v-for="filter in filter_list">
+            <button class="dropdown-item" @click="changeFilter(filter)">
+              {{ filter }}
             </button>
           </li>
         </ul>
@@ -49,39 +33,46 @@
       </div>
     </div>
   </div>
-  </div>
 </template>
 
+
 <script>
+import useValidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
+
 export default {
   name: "Search Bar",
   data: function () {
     return {
+      v$: useValidate(),
       searchText: "",
       searchFilter: "All",
+      filter_list: ["All", "Title", "Year", "Genre", "Celebrity"],
     };
   },
   methods: {
     search() {
-      const searchURL = "/home?" + this.searchFilter + "=" + this.searchText;
-      this.$router.push(searchURL);
+      console.log(this.v$);
+      const searchURL =
+        "/home/search?" + this.searchFilter + "=" + this.searchText;
+      this.$router.push({
+        path: "/home/search",
+        query: { [this.searchFilter]: this.searchText },
+      });
     },
+    changeFilter(filter) {
+      this.searchFilter = filter;
+      this.searchText = "";
+    },
+  },
+  validations: function () {
+    return { searchText: { required } };
   },
 };
 </script>
 
 <style scoped>
-/*#searchBar {*/
-/*  width: 400px !important;*/
-/*}*/
-
-.abc {
-  left: 28%;
-  top:50%;
-  height: 20%;
-  width: 44%;
-  z-index: 1;
-  position: fixed;
+#searchBar {
+  width: 100px !important;
 }
-
 </style>

@@ -29,6 +29,7 @@ export default {
     total_page: Number,
     current_page: {
       type: Number,
+      default: 1,
       required: true,
     },
     maxVisibleButtons: {
@@ -56,7 +57,7 @@ export default {
           pag.unshift(i--);
         }
       } else {
-        var middle = this.current_page - Math.floor(this.showItem / 2), 
+        var middle = this.current_page - Math.floor(this.showItem / 2),
           i = this.showItem;
         if (middle > this.total_page - this.showItem) {
           middle = this.total_page - this.showItem + 1;

@@ -3,6 +3,7 @@ import math
 from multiprocessing.dummy import Process
 from pydoc import doc
 import re
+from tkinter.messagebox import NO
 from unittest import result
 import numpy as np
 import logging
@@ -55,7 +56,6 @@ class BM25:
         return sim
 
 def get_movies_by_title(title):
-    global Title_dict, People_dict, Year_dict, Genre_dict
     query = Preprocess(title)[0]
     query_tokens = query.split()
     docs = []
@@ -80,9 +80,36 @@ def get_movies_by_title(title):
         results = [docs_dict[e] for e in results]    
         return results
     except KeyError as e:
-        print(e)
+        return None
+
+def get_movies_by_year(year):
+    dict_rank = {}
+    try:
+        ids = Year_dict[year]
+        for i in range(len(ids)):
+            dict_rank[ids[i]] = dict_score[ids[i]]
+        dict_rank = sorted(dict_rank.items(), key=lambda x: x[1], reverse=True)
+        oid_list = [i[0] for i in dict_rank]
+        return oid_list
+    except KeyError as e:
+        return None
+
+
+def get_movies_by_genre(genre):
+    dict_rank = {}
+    try:
+        ids = Genre_dict[genre]
+        for i in range(len(ids)):
+            dict_rank[ids[i]] = dict_score[ids[i]]
+        dict_rank = sorted(dict_rank.items(), key=lambda x: x[1], reverse=True)
+        oid_list = [i[0] for i in dict_rank]
+        return oid_list
+    except:
+        return None
 
 
 title_list = get_title_list('movies.json')
 title_dict = get_title_dict('movies.json')
+dict_score = get_score('movies.json')
 Title_dict, People_dict, Year_dict, Genre_dict = get_index('movies.json')
+
