@@ -8,7 +8,6 @@
       <h1>Please try another keywords in the searching box.</h1>
       <h1>Thanks for your patience.</h1>
     </div>
-
   </div>
 </template>
 
@@ -16,8 +15,6 @@
 <script>
 export default {
   name: "ErrorPage",
-  components: {
-  },
 };
 </script>
 

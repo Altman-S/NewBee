@@ -25,6 +25,7 @@
         id="searchBar"
         placeholder="search"
         v-model="searchText"
+        @keydown.enter="search"
       />
       <div class="input-group-append">
         <button class="btn btn-primary" @click="search">
@@ -52,7 +53,7 @@ export default {
   },
   methods: {
     search() {
-      console.log(this.v$);
+    //   console.log(this.v$);
       const searchURL =
         "/home/search?" + this.searchFilter + "=" + this.searchText;
       this.$router.push({
