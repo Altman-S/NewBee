@@ -102,7 +102,7 @@ def output_pop_info():
         f.write('')
 
     # write tconst to file
-    file = open('data/data100k/info_90k_1000k.txt', 'a')
+    file = open('data/data100k/info_90k_100k.txt', 'a')
     for i in range(len(info_list)):
         s = json.dumps(info_list[i]) + "\n"
         file.write(s)
