@@ -42,7 +42,7 @@ def get_movies(filters, page, movies_per_page):
     else:
         cursor = db.movies.find(query).sort(sort)
     total_num_movies = 0
-    if page == 1:
+    if page == 0:
         total_num_movies = db.movies.count_documents(query)
     movies = cursor.skip(page*movies_per_page).limit(movies_per_page)
     print(f"total number: {total_num_movies}")
@@ -58,8 +58,15 @@ def get_movie_by_imdbID(id):
         return {}
 
 
-def get_movies_by_oid(oid_list):
+def get_movies_by_oid(oid_list, page, movies_per_page):
     oid_list = [ObjectId(i) for i in oid_list]
-    movies = db.movies.find({'_id':{'$in':oid_list}})
-    return list(movies)
+    query = {'_id': {'$in': oid_list}}
+    sort = [("imdbRating", DESCENDING), ("_id", ASCENDING)]
+    cursor = db.movies.find(query).sort(sort)
+    total_num_movies = 0
+    if page == 1:
+        total_num_movies = db.movies.count_documents(query)
+    movies = cursor.skip((page-1)*movies_per_page).limit(movies_per_page)
+    print(f"total number: {total_num_movies}")
+    return list(movies), total_num_movies
 

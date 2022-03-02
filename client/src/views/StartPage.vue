@@ -1,14 +1,31 @@
 <template>
-  <div class="start-page">
-    <div class="logo"><img src="../../public/logos/MIO.png" alt=""></div>
-    <!-- <div class="position-absolute top-50 start-50 translate-middle"> -->
-      <search-bar></search-bar>
-    <!-- </div> -->
+  <div>
+    <div class="background">
+      <img
+        class="unselectable"
+        src="../../public/logos/background.jpg"
+        width="100%"
+        height="100%"
+        alt=""
+      />
+    </div>
+    <div class="logo">
+      <img
+        src="../../public/logos/logo.png"
+        width="100%"
+        height="100%"
+        alt=""
+      />
+    </div>
+    <div class="abc">
+      <!-- <search-bar></search-bar> -->
+    </div>
+    <search-bar></search-bar>
   </div>
 </template>
 
 <script>
-import SearchBar from "../components/SearchBar.vue";
+import SearchBar from "../components/SearchBarStartPage.vue";
 
 export default {
   name: "Start Page",
@@ -25,13 +42,38 @@ export default {
   background-color: #343a40;
   border-radius: 0.25rem;
 }
-.start-page{
-  background-color: #1e3799 !important;
+
+.background {
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  position: fixed;
 }
-/* .position-relative-example div {
-  width: 2em;
-  height: 2em;
-  background-color: #343a40;
-  border-radius: 0.25rem;
-} */
+
+.logo {
+  margin: 0 auto;
+  left: 35%;
+  top: 23%;
+  height: 26%;
+  width: 28%;
+  position: fixed;
+}
+
+.abc {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  /* background-color: aquamarine; */
+}
+
+.unselectable {
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
 </style>

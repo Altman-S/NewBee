@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
-from API.db import get_movie_by_imdbID, get_movies
+from API.db import get_movie_by_imdbID, get_movies, get_movies_by_oid
 from flask_cors import CORS
+from BM25 import *
 
 movies_api = Blueprint('movies_api', __name__, url_prefix='/api/movies')
 
@@ -37,20 +38,32 @@ def api_search_movie():
     all = request.args.get('All')
     title = request.args.get('Title')
     celes = request.args.get('Celebrity')
-    genre = request.args.getlist('Genre')
+    genre = request.args.get('Genre')
+    year = request.args.get('Year')
+    if all:
+        filters['all'] = all
     if title:
         filters['title'] = title
     if celes:
         filters['celes'] = celes
     if genre:
         filters['genre'] = genre
-    movies, total_number = get_movies(
-        filters, page=page, movies_per_page=DEFAULT_MOVIES_PER_PAGE)
-    response = {
-        "movies": movies,
-        'total_number': total_number,
-        'current_page': page
-    }
+    if year:
+        filters['year'] = year
+    oid_list = get_oid_from_BM25(filters)
+    if oid_list:
+        movies, total_number = get_movies_by_oid(
+            oid_list, page, DEFAULT_MOVIES_PER_PAGE)
+        response = {
+            "movies": movies,
+            "total_number": total_number,
+            "current_page": page,
+            "response": 'success'
+        }
+    else:
+        response = {
+            "response": 'fail'
+        }
     return jsonify(response), 200
 
 
@@ -72,3 +85,14 @@ def api_get_movie_by_id(id):
                 "movie": movie,
             }
         ), 200
+
+
+def get_oid_from_BM25(filters):
+    oid_list = None
+    if 'title' in filters:
+        oid_list = get_movies_by_title(filters['title'])
+    if 'year' in filters:
+        oid_list = get_movies_by_year(filters['year'])
+    if 'genre' in filters:
+        oid_list = get_movies_by_genre(filters['genre'])
+    return oid_list
