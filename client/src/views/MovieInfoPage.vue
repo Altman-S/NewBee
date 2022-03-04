@@ -22,7 +22,7 @@
         <div class="votes">Votes: {{ movie.imdbVotes }}</div>
 
         <div class="runtime">Runtime: {{ movie.Runtime }}</div>
-        <div class="imdbid">imdbID: {{ movie.imdbID }}</div>
+        <div class="imdbid">IMDB ID: {{ movie.imdbID }}</div>
 
         <div>
           <h3 class="plot-title">Plot of {{ movie.Title }}</h3>

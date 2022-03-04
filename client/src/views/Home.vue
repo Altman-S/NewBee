@@ -3,8 +3,8 @@
     <div class="logo">
       <img
           src="../../public/logos/logo.png"
-          width="100"
-          height="65"
+          width="90"
+          height="55"
           alt=""
       />
     </div>
@@ -62,8 +62,8 @@ export default {
 <style>
 .logo {
   margin: 0 auto;
-  left: 5%;
-  top: 1%;
+  left: 6%;
+  top: 1.6%;
   position: fixed;
 }
 </style>
