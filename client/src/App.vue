@@ -3,12 +3,9 @@
 </template>
 
 <script>
-import StartPage from "./views/StartPage.vue";
-
 export default {
   name: "App",
   components: {
-    StartPage,
   },
   data: function () {
     return {};

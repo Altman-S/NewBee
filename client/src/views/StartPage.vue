@@ -21,16 +21,19 @@
       <!-- <search-bar></search-bar> -->
     </div>
     <search-bar></search-bar>
+    <!-- <dropdown></dropdown> -->
   </div>
 </template>
 
 <script>
 import SearchBar from "../components/SearchBarStartPage.vue";
+import Dropdown from "../components/Dropdown.vue"
 
 export default {
   name: "Start Page",
   components: {
     SearchBar,
+    Dropdown
   },
 };
 </script>
