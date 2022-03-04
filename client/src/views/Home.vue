@@ -1,5 +1,14 @@
 <template>
   <div id="home">
+    <div class="logo">
+      <img
+          src="../../public/logos/logo.png"
+          width="100"
+          height="65"
+          alt=""
+      />
+    </div>
+
     <div class="background">
       <img
         class="unselectable"
@@ -9,6 +18,7 @@
         alt=""
       />
     </div>
+
     <div class="header">
       <img
         src="../../public/logos/logo.png"
@@ -18,6 +28,7 @@
       />
       <search-bar></search-bar>
     </div>
+
     <div class="container">
       <router-view v-slot="{ Component, route }">
         <keep-alive>
@@ -49,4 +60,10 @@ export default {
 </script>
 
 <style>
+.logo {
+  margin: 0 auto;
+  left: 5%;
+  top: 1%;
+  position: fixed;
+}
 </style>
