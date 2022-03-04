@@ -2,6 +2,7 @@ import re
 import requests
 import logging
 from fake_useragent import UserAgent
+from bs4 import BeautifulSoup
 
 # Basic configuration of the log output
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s: %(message)s')
@@ -29,6 +30,21 @@ def scrape_html(url):
 
     else:
         logging.info('Page request failed')
+
+
+# get label and attr in a url
+def get_next_html(url):
+    resp = requests.get(url, headers=random_ua())
+    html = resp.text
+    soup = BeautifulSoup(html, 'html.parser')
+    next_page = ""
+
+    for k in soup.find_all('a', attrs={'class': 'lister-page-next next-page'}):
+        next_page = k['href']
+
+    return next_page
+
+# print(get_next_html('https://www.imdb.com/search/title/?title_type=feature&year=2010-01-01,2021-12-31&start=9951&ref_=adv_prv'))
 
 
 # Get the tconst of each movie, so we can get the whole information
