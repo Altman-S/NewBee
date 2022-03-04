@@ -24,13 +24,11 @@ export default {
   created: function () {
     console.log("MovieListPage created");
     this.$watch(
-      //   "this.$route.query",
       () => this.$route.query,
       (newQuery, oldQuery) => {
-        console.log(this.$route);
         this.search_params = {};
         const query = this.$route.query;
-        if (Object.keys(query).length!=0) {
+        if (Object.keys(query).length != 0) {
           for (let key in query) {
             this.search_params[key] = query[key];
           }
@@ -66,9 +64,9 @@ export default {
           this.movies = movies;
           this.current_page = data.current_page;
         });
+      
     },
     search() {
-      console.log(this.search_params);
       const searchURL = new URLSearchParams(this.search_params);
       //   console.log(`${this.api}?${searchURL}`);
       // fetch(`${this.api}?${searchURL}`)
@@ -81,7 +79,6 @@ export default {
             this.total_number = data.total_number;
             this.current_page = data.current_page;
           } else {
-            console.log("Error");
             this.$router.replace({ path: "/notfound/1" });
           }
         });

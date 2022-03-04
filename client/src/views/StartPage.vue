@@ -21,21 +21,24 @@
       <!-- <search-bar></search-bar> -->
     </div>
     <search-bar></search-bar>
+    <!-- <dropdown></dropdown> -->
   </div>
 </template>
 
 <script>
 import SearchBar from "../components/SearchBarStartPage.vue";
+import Dropdown from "../components/Dropdown.vue";
 
 export default {
   name: "Start Page",
   components: {
     SearchBar,
+    Dropdown,
   },
 };
 </script>
 
-<style>
+<style scoped>
 .block {
   width: 10em;
   height: 2em;
@@ -57,15 +60,6 @@ export default {
   height: 26%;
   width: 28%;
   position: fixed;
-}
-
-.abc {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100px;
-  height: 100px;
-  /* background-color: aquamarine; */
 }
 
 .unselectable {
