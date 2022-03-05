@@ -3,12 +3,12 @@ import math
 from multiprocessing.dummy import Process
 from pydoc import doc
 import re
-from tkinter.messagebox import NO
 from unittest import result
 import numpy as np
 import logging
 from collections import Counter
 from createindex import *
+import os
 
 
 class BM25:
@@ -55,61 +55,68 @@ class BM25:
         sim = np.sum(sum_score,axis=0)
         return sim
 
-def get_movies_by_title(title):
-    query = Preprocess(title)[0]
+def search_title(query):
+    with open('title_dict.pkl','rb') as f:
+        title_dict = pickle.load(f,encoding='bytes')
+    with open('Title_token_dict.pkl','rb') as f:
+        Title_token_dict = pickle.load(f,encoding='bytes')
+    # print(Title_dict)
+    query = Preprocess(query)[0]
     query_tokens = query.split()
     docs = []
     docs_dict = {}
-    try:
-        for token in query_tokens:
-            ids = Title_dict[token]
-            for id in ids:
-                title = title_dict[id]
-                title = Preprocess(title)
-                if title not in docs:
-                    docs.append(title)
-                    docs_dict[' '.join(title)]=id
-        bm = BM25(docs)
-        score = bm.score_all(query_tokens)
-        score_index = {}
-        for i in range(len(score)):
-            score_index[i]=score[i]
-        score_index = sorted(score_index.items(),key = lambda x:(x[1],x[0]),reverse=True)
-        new_dict = {v : k for k, v in title_dict.items()}
-        results = [' '.join(docs[i[0]]) for i in score_index]
-        results = [docs_dict[e] for e in results]    
-        return results
-    except KeyError as e:
-        return None
+    for token in query_tokens:
+        ids = Title_token_dict[token]
+        for id in ids:
+            title = title_dict[id]
+            title = Preprocess(title)
+            # print(title)
+            if title not in docs:
+                docs.append(title)
+                docs_dict[' '.join(title)]=id
+    bm = BM25(docs)
+    score = bm.score_all(query_tokens)
+    score_index = {}
+    for i in range(len(score)):
+        score_index[i]=score[i]
+    score_index = sorted(score_index.items(),key = lambda x:(x[1],x[0]),reverse=True)
+    # new_dict = {v : k for k, v in title_dict.items()}
+    results = [' '.join(docs[i[0]]) for i in score_index]
+    results = [docs_dict[e] for e in results]    
+    return results
 
-def get_movies_by_year(year):
-    dict_rank = {}
-    try:
-        ids = Year_dict[year]
-        for i in range(len(ids)):
-            dict_rank[ids[i]] = dict_score[ids[i]]
-        dict_rank = sorted(dict_rank.items(), key=lambda x: x[1], reverse=True)
-        oid_list = [i[0] for i in dict_rank]
-        return oid_list
-    except KeyError as e:
-        return None
+def search_celebrity(query):
+    with open('people_dict.pkl','rb') as f:
+        people_dict = pickle.load(f,encoding='bytes')
+    with open('People_token_dict.pkl','rb') as f:
+        People_token_dict = pickle.load(f,encoding='bytes')
+    print(people_dict.keys())
+    query = Preprocess(query)[0]
+    query_tokens = query.split()
+    docs = []
+    docs_dict = {}
+    for token in query_tokens:
+        ids = People_token_dict[token]
+        for id in ids:
+            people = people_dict[id]
+            people = Preprocess(people)
+            # print(title)
+            if people not in docs:
+                docs.append(people)
+                docs_dict[' '.join(people)]=id
+    bm = BM25(docs)
+    score = bm.score_all(query_tokens)
+    score_index = {}
+    for i in range(len(score)):
+        score_index[i]=score[i]
+    score_index = sorted(score_index.items(),key = lambda x:(x[1],x[0]),reverse=True)
+    # new_dict = {v : k for k, v in title_dict.items()}
+    results = [' '.join(docs[i[0]]) for i in score_index]
+    results = [docs_dict[e] for e in results]    
+    return results
 
-
-def get_movies_by_genre(genre):
-    dict_rank = {}
-    try:
-        ids = Genre_dict[genre]
-        for i in range(len(ids)):
-            dict_rank[ids[i]] = dict_score[ids[i]]
-        dict_rank = sorted(dict_rank.items(), key=lambda x: x[1], reverse=True)
-        oid_list = [i[0] for i in dict_rank]
-        return oid_list
-    except:
-        return None
-
-
-title_list = get_title_list('movies.json')
-title_dict = get_title_dict('movies.json')
-dict_score = get_score('movies.json')
-Title_dict, People_dict, Year_dict, Genre_dict = get_index('movies.json')
-
+if __name__ == "__main__":
+    if not os.path.isfile('Title_dict.pkl'):
+        get_index('movies.json')
+    query = 'Harry Potter'
+    print(search_celebrity(query))
