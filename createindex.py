@@ -32,6 +32,11 @@ def get_index(file_name):
         #ratings.append(float(movie['imdbRating']))
         #votes.append(float(movie['imdbVotes'].replace(",",'')))
         movie['Genre']= movie['Genre'].split(' ')
+    Texts = Title_text+Genre+People
+    f = open('text.txt', 'w', encoding='utf-8')
+    f.write(Texts)
+    f.close()
+
     Title_text =Preprocess(Title_text)
         #print(len(People))
         #People += (' '+(movie['Director']))
@@ -169,8 +174,13 @@ def Preprocess(query):
 Title_dict, People_dict, Year_dict, Genre_dict = get_index('movies.json')
 dict_score= get_score('movies.json')
 #print(dict_score)
+
 #print(People_dict)
+
+title = json.dumps(Title_dict)
 people = json.dumps(People_dict)
+with open('title.json', 'w') as f:
+    f.write(title)
 with open('people.json','w') as f:
     f.write(people)
 
