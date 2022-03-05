@@ -62,11 +62,11 @@ def get_movies_by_oid(oid_list, page, movies_per_page):
     oid_list = [ObjectId(i) for i in oid_list]
     query = {'_id': {'$in': oid_list}}
     sort = [("imdbRating", DESCENDING), ("_id", ASCENDING)]
-    cursor = db.movies.find(query).sort(sort)
+    cursor = db.movies.find(query)
     total_num_movies = 0
     if page == 1:
         total_num_movies = db.movies.count_documents(query)
     movies = cursor.skip((page-1)*movies_per_page).limit(movies_per_page)
-    print(f"total number: {total_num_movies}")
+    # print(f"total number: {total_num_movies}")
     return list(movies), total_num_movies
 

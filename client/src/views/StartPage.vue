@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import SearchBar from "../components/SearchBarStartPage.vue";
+import SearchBar from "../components/SearchBar.vue";
 import Dropdown from "../components/Dropdown.vue";
 
 export default {

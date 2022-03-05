@@ -1,13 +1,17 @@
 <template>
   <div id="home">
-    <div class="logo">
-      <img
-          src="../../public/logos/logo.png"
-          width="90"
-          height="55"
-          alt=""
-      />
-    </div>
+    <router-link :to="'/'" custom v-slot="{ href }">
+      <div class="logo">
+        <a :href="href"
+          ><img
+            src="../../public/logos/logo.png"
+            width="90"
+            height="55"
+            alt=""
+            hre
+        /></a>
+      </div>
+    </router-link>
 
     <div class="background">
       <img
@@ -19,15 +23,9 @@
       />
     </div>
 
-    <div class="header">
-      <img
-        src="../../public/logos/logo.png"
-        width="100px"
-        height="100px"
-        alt=""
-      />
+    <!-- <div class="header"> -->
       <search-bar></search-bar>
-    </div>
+    <!-- </div> -->
 
     <div class="container">
       <router-view v-slot="{ Component, route }">

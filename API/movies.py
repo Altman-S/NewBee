@@ -50,8 +50,10 @@ def api_search_movie():
         filters['genre'] = genre
     if year:
         filters['year'] = year
+    print(filters)
     oid_list = get_oid_from_BM25(filters)
     if oid_list:
+        print(len(oid_list))
         movies, total_number = get_movies_by_oid(
             oid_list, page, DEFAULT_MOVIES_PER_PAGE)
         response = {
@@ -88,11 +90,14 @@ def api_get_movie_by_id(id):
 
 
 def get_oid_from_BM25(filters):
+    print("Seaching")
     oid_list = None
     if 'title' in filters:
-        oid_list = get_movies_by_title(filters['title'])
+        oid_list = search_title(filters['title'])
+    if 'celes' in filters:
+        oid_list = search_celebrity(filters['celes'])
     if 'year' in filters:
-        oid_list = get_movies_by_year(filters['year'])
+        oid_list = search_year(filters['year'])
     if 'genre' in filters:
-        oid_list = get_movies_by_genre(filters['genre'])
+        oid_list = search_genre(filters['genre'])
     return oid_list
