@@ -1,8 +1,10 @@
+from genericpath import isfile
 import json
 from turtle import down
 import requests
 from pymongo import MongoClient
 import pandas
+import os
 
 key = "94feff88"
 
@@ -43,12 +45,14 @@ def get_top250_movies():
 
 def get_movie():
     movies = []
-    with open('data-top/data/pop_info.txt', 'r', encoding='utf-8') as reader:
-        for line in reader:
-            movie = json.loads(line)
-            movies.append(movie)
+    path = 'data-top/data/data100k/'
+    for f in os.listdir(path):
+        if isfile(os.path.join(path,f)) and f!='page_url.txt':
+            with open(os.path.join(path,f),'r',encoding='utf-8') as reader:
+                for line in reader:
+                    movie = json.loads(line)
+                    movies.append(movie)
     return movies
-
 
 def get_db():
     uri = "mongodb+srv://m001-student:789654123@sandbox.xzdvv.mongodb.net/test"
@@ -69,7 +73,9 @@ def insert_top250(db, top250):
 
 if __name__ == "__main__":
     movies = get_movie()
+    print(len(movies))
+    print(movies[0])
     db = get_db()
-    respond = insert_movies(db, movies)
+    respond = insert_movies(db, movies[50000:])
     print(respond)
     
