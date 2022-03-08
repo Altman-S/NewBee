@@ -4,6 +4,7 @@ import MovieInfoPage from '../views/MovieInfoPage.vue'
 import StartPage from '../views/StartPage.vue'
 import NotFoundPage from '../views/NotFoundPage.vue'
 import MovieListPage from '../views/MovieListPage.vue'
+import MovieAllPage from "../views/MovieAllPage";
 
 
 const routes = [
@@ -44,6 +45,15 @@ const routes = [
                 path: '/movie/:id',
                 name: 'MovieInfoPage',
                 component: MovieInfoPage,
+                props: true,
+                meta: {
+                    keepAlive: false
+                }
+            },
+            {
+                path: '/searchAll',
+                name: 'MovieAllPage',
+                component: MovieAllPage,
                 props: true,
                 meta: {
                     keepAlive: false
