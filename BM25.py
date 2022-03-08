@@ -58,6 +58,12 @@ class BM25:
 
 
 def search_title(query):
+    with open('title_dict.pkl','rb') as f:
+        title_dict = pickle.load(f,encoding='bytes')
+    with open('Title_token_dict.pkl','rb') as f:
+        Title_token_dict = pickle.load(f,encoding='bytes')
+    with open('dict_score.pkl','rb') as f:
+        dict_score = pickle.load(f,encoding='bytes')
     query = Preprocess(query)[0]
     query_tokens = query.split()
     docs = []
@@ -67,18 +73,24 @@ def search_title(query):
         for id in ids:
             title = title_dict[id]
             title = Preprocess(title)
-            # print(title)
             if title not in docs:
                 docs.append(title)
-                docs_dict[' '.join(title)] = id
+                docs_dict[' '.join(title)]=id
     bm = BM25(docs)
     score = bm.score_all(query_tokens)
     score_index = {}
+    score_max = max(score)
+    score_min = min(score)
+    scale = score_max-score_min
+    score = np.array([(e-score_min)/scale for e in score])
     for i in range(len(score)):
-        score_index[i] = score[i]
-    score_index = sorted(score_index.items(),
-                         key=lambda x: (x[1], x[0]), reverse=True)
-    # new_dict = {v : k for k, v in title_dict.items()}
+        score_index[i]=score[i]
+    results = [' '.join(docs[i]) for i in score_index.keys()]
+    results = [docs_dict[e] for e in results]
+    vote_score = [dict_score[e] for e in results]
+    for i in range(len(score_index)):
+        score_index[i]+=vote_score[i]
+    score_index = sorted(score_index.items(),key = lambda x:(x[1],x[0]),reverse=True)
     results = [' '.join(docs[i[0]]) for i in score_index]
     results = [docs_dict[e] for e in results]
     return results
