@@ -5,7 +5,7 @@
         <a :href="href"
           ><img
             src="../../public/logos/logo.png"
-            width="90"
+            width="120"
             height="55"
             alt=""
             hre
@@ -24,10 +24,13 @@
     </div>
 
     <!-- <div class="header"> -->
-      <search-bar></search-bar>
+    <search-bar></search-bar>
     <!-- </div> -->
+    <h3 class="result" v-if="this.$route.path == '/home/search'">
+      Results for '{{ Object.values(this.$route.query)[0] }}'
+    </h3>
 
-    <div class="container">
+    <div>
       <router-view v-slot="{ Component, route }">
         <keep-alive>
           <component
@@ -60,8 +63,14 @@ export default {
 <style>
 .logo {
   margin: 0 auto;
-  left: 6%;
+  left: 9%;
   top: 1.6%;
-  position: fixed;
+  position: absolute;
+}
+.result {
+  color: aliceblue;
+  left: 10%;
+  top: 10%;
+  position: absolute;
 }
 </style>

@@ -34,17 +34,15 @@
           @keydown.enter="search"
           @keyup="get($event)"
         />
+        <ul class="list-group">
+          <li class="list-group-item" v-for="data in myData">{{data.category}} | {{data.title}}</li>
+        </ul>
         <div class="input-group-append">
           <button class="btn btn-primary" @click="search">
             <i class="fas fa-search"></i>
           </button>
         </div>
       </div>
-      <ul>
-        <li v-for="(item, index) in myData" :class="{ gray: index === now }">
-          {{ item }}
-        </li>
-      </ul>
     </div>
   </div>
 </template>
@@ -91,12 +89,24 @@ export default {
       if (e.keyCode === 38 || e.keyCode === 40) {
         return;
       }
+      this.myData = []
       // 限制频繁请求
-      this.throttle(this.getData, window);
+    //   this.throttle(this.getData, window);
     },
     getData() {
-      console.log("get data");
-      this.myData = ["a", "b", "c"];
+      fetch(`http://127.0.0.1:5000/api/movies/prompt?${this.searchText}`)
+        .then((response) => response.json())
+        .then((data) => {
+          for (const [key, value] of Object.entries(data.prompt)) {
+            console.log(key);
+            this.myData.push({
+              category: key,
+              title: value[0].Title,
+              year: value[0].Year,
+              actors: value[0].Actors,
+            });
+          }
+        });
     },
     throttle(method, context) {
       clearTimeout(method.tId);
@@ -137,10 +147,36 @@ export default {
   position: fixed;
 }
 .homePage {
-  left: 28%;
-  top: 5%;
-  width: 40%;
+  left: 20%;
+  top: 3%;
+  width: 50%;
   /* need fix this bug */
-  /* position: absolute; */ 
+  position: absolute;
 }
+.list-group {
+  background-color: white;
+  /* display: none; */
+  list-style-type: none;
+  top: 100%;
+  margin: 0 0 0 10px;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.list-group > li {
+  border-color: gray;
+  border-image: none;
+  border-style: solid solid none;
+  border-width: 1px 1px 0;
+  padding-left: 5px;
+}
+
+.list-group > li:last-child {
+  border-bottom: 1px solid gray;
+}
+
+/*.form-control:focus + .list-group {
+  display: block;
+} */
 </style>

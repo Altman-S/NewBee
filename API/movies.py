@@ -85,12 +85,13 @@ def api_get_movie_by_id(id):
         return jsonify(
             {
                 "movie": movie,
+                "response": 'success'
             }
         ), 200
 
 
 def get_oid_from_BM25(filters):
-    print("Seaching")
+    print("Searching")
     oid_list = None
     if 'title' in filters:
         oid_list = search_title(filters['title'])
@@ -100,4 +101,27 @@ def get_oid_from_BM25(filters):
         oid_list = search_year(filters['year'])
     if 'genre' in filters:
         oid_list = search_genre(filters['genre'])
+    # if 'all' in filters:
+        # {}
     return oid_list
+
+
+@movies_api.route('/prompt', methods=['GET'])
+def api_input_prompt():
+    input = request.args.get('input')
+    print(input)
+    oid = {'title': '62235b3999820f460dbdd37e', 'genre': '62235b3999820f460dbdd37e',
+           'year': '62235b3999820f460dbdd37e', 'celebs': '62235b3999820f460dbdd37e'}
+    output = {}
+    for category, oid in oid.items():
+        output[category] = get_movies_by_oid([oid],1,1)[0]
+    if output:
+        response = {
+            "prompt": output,
+            "response": 'success'
+        }
+    else:
+        response = {
+            "response": 'fail'
+        }
+    return jsonify(response), 200

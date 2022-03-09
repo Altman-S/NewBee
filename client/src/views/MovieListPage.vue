@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="moviecardcontainer">
     <movie-card-container :movies="movies"></movie-card-container>
     <pagination
       :total_page="total_page"
@@ -98,5 +98,10 @@ export default {
   height: 100%;
   z-index: -1;
   position: fixed;
+}
+.moviecardcontainer {
+  top: 16%;
+  left: 8%;
+  position: absolute;
 }
 </style>
