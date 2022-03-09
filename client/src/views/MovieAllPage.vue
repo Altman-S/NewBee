@@ -4,18 +4,27 @@
       <div class="col-10">
         <div class="bg-grey">
           <h4 class="abc">Title</h4>
+          <div class="rightright">
+            <h4 class="def">More</h4>
+          </div>
           <movie-card-container :movies="title_movies"></movie-card-container>
         </div>
       </div>
       <div class="col-10">
         <div class="bg-grey">
           <h4 class="abc">Celebrity</h4>
+          <div class="rightright">
+            <h4 class="def">More</h4>
+          </div>
           <movie-card-container :movies="celes_movies"></movie-card-container>
         </div>
       </div>
       <div class="col-10">
         <div class="bg-grey">
           <h4 class="abc">Genre</h4>
+          <div class="rightright">
+            <h4 class="def">More</h4>
+          </div>
           <movie-card-container :movies="genre_movies"></movie-card-container>
         </div>
       </div>
@@ -23,6 +32,9 @@
 <!--        <div class="p-3 border bg-grey">-->
         <div class="bg-grey">
           <h4 class="abc">Year</h4>
+          <div class="rightright">
+            <h4 class="def">More</h4>
+          </div>
           <movie-card-container :movies="year_movies"></movie-card-container>
         </div>
       </div>
@@ -128,5 +140,19 @@ export default {
 <style scoped>
 .abc {
   color: gold;
+}
+
+.def {
+  color: white;
+}
+
+.leftleft {
+  float: left;
+  display: inline;
+}
+
+.rightright {
+  float: right;
+  display: inline;
 }
 </style>
