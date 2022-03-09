@@ -148,19 +148,19 @@ def search_celebrity(query):
         return None
 
 
-with open('title_dict.pkl', 'rb') as f:
+with open('pkl_data/title_dict.pkl', 'rb') as f:
     title_dict = pickle.load(f, encoding='bytes')
-with open('Title_token_dict.pkl', 'rb') as f:
+with open('pkl_data/Title_token_dict.pkl', 'rb') as f:
     Title_token_dict = pickle.load(f, encoding='bytes')
-with open('people_dict.pkl', 'rb') as f:
+with open('pkl_data/people_dict.pkl', 'rb') as f:
     people_dict = pickle.load(f, encoding='bytes')
-with open('People_token_dict.pkl', 'rb') as f:
+with open('pkl_data/People_token_dict.pkl', 'rb') as f:
     People_token_dict = pickle.load(f, encoding='bytes')
-with open('Genre_dict.pkl', 'rb') as f:
+with open('pkl_data/Genre_dict.pkl', 'rb') as f:
     Genre_dict = pickle.load(f, encoding='bytes')
 with open('Year_dict.pkl', 'rb') as f:
     Year_dict = pickle.load(f, encoding='bytes')
-with open('dict_score.pkl', 'rb') as f:
+with open('pkl_data/dict_score.pkl', 'rb') as f:
     dict_score = pickle.load(f, encoding='bytes')
 print("All index loaded")
 
