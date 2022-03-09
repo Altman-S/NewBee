@@ -58,11 +58,11 @@ class BM25:
 
 
 def search_title(query):
-    with open('title_dict.pkl','rb') as f:
+    with open('pkl_data/title_dict.pkl','rb') as f:
         title_dict = pickle.load(f,encoding='bytes')
-    with open('Title_token_dict.pkl','rb') as f:
+    with open('pkl_data/Title_token_dict.pkl','rb') as f:
         Title_token_dict = pickle.load(f,encoding='bytes')
-    with open('dict_score.pkl','rb') as f:
+    with open('pkl_data/dict_score.pkl','rb') as f:
         dict_score = pickle.load(f,encoding='bytes')
     query = Preprocess(query)[0]
     query_tokens = query.split()
