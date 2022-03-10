@@ -1,8 +1,16 @@
 import json
+<<<<<<< HEAD
 from nltk.stem.porter import PorterStemmer
 from numpy import *
 import numpy as np
 
+=======
+# from matplotlib.pyplot import bar_label, title
+from nltk.stem.porter import PorterStemmer
+from numpy import *
+import numpy as np
+import pickle
+>>>>>>> upstream/master
 
 def get_index(file_name):
     with open(file_name, encoding='utf-8') as f:
@@ -11,10 +19,16 @@ def get_index(file_name):
     Year = []
     People = ""
     Genre = ""
+<<<<<<< HEAD
+=======
+    title_dict = dict()
+    people_dict = dict()
+>>>>>>> upstream/master
     #votes = []
     #ratings = []
 
     for movie in movie_inf:
+<<<<<<< HEAD
         movie['Genre'] = movie['Genre'].replace(',', ' ')
         Title_text += (' '+movie['Title'])
         Year.append(movie['Year'])
@@ -28,14 +42,56 @@ def get_index(file_name):
         People+=people
         movie['people'] = Preprocess(people)
         movie['Director'] = Preprocess(movie['Director'])#.split(' ')
+=======
+         ################################get_title_dict()
+        title_text = Preprocess(movie['Title'])
+        title_text = ' '.join(title_text)
+        movie_id = movie['_id']['$oid']
+        if movie_id not in title_dict.keys():
+            title_dict[movie_id] = title_text
+
+        ################################# get_people_dict()
+        director_text = Preprocess(movie['Director'].replace(',',' '))
+        # print(director_text)
+        # break
+        actor_text = Preprocess(movie['Actors'].replace(',',' '))
+        writer_text = Preprocess(movie['Writer'].replace(',',' '))
+        # print(actor_text)
+        # break
+        people_text = ' ' + ' '.join(director_text) + ' ' + ' '.join(actor_text)+ ' ' + ' '.join(writer_text)
+        people_text = people_text.replace('n/a',' ')
+        # print(people_text)
+        # break
+        movie_id = movie['_id']['$oid']
+        if movie_id not in people_dict.keys():
+            people_dict[movie_id] = people_text
+        #############################################
+
+        movie['Genre'] = movie['Genre'].replace(',', ' ')
+        Title_text += (' '+movie['Title'])
+        Year.append(movie['Year'])
+        # People+=(' '+(movie['Director'].replace(',',' ')))
+        # movie['Actors'] = movie['Actors'].replace(',', ' ')
+        # people= ""
+        # people+=(' '+str(movie['Actors']))
+        Genre+=(' '+str(movie['Genre']))
+        # if movie['Writer']!='N/A':
+        #     people+=(' '+movie['Writer'].replace(',',' '))
+        People+=(' '+people_text)
+        movie['people'] = Preprocess(people_text)
+        # movie['Director'] = Preprocess(movie['Director'])#.split(' ')
+>>>>>>> upstream/master
         movie['Title'] =Preprocess(movie['Title'])#.split(' ')
         #ratings.append(float(movie['imdbRating']))
         #votes.append(float(movie['imdbVotes'].replace(",",'')))
         movie['Genre']= movie['Genre'].split(' ')
+<<<<<<< HEAD
     Texts = Title_text+Genre+People
     f = open('text.txt', 'w', encoding='utf-8')
     f.write(Texts)
     f.close()
+=======
+>>>>>>> upstream/master
 
     Title_text =Preprocess(Title_text)
         #print(len(People))
@@ -53,6 +109,7 @@ def get_index(file_name):
     #print(Genre)
     Genre_dict = {}
     People = Preprocess(People)
+<<<<<<< HEAD
     People_dict = {}
     Title_dict = {}
     # initialize the dict
@@ -60,6 +117,16 @@ def get_index(file_name):
         People_dict[People[i]] = []
     for i in range(len(Title_text)):
         Title_dict[Title_text[i]] = []
+=======
+    People_token_dict = {}
+    Title_token_dict = {}
+    # initialize the dict
+    for i in range(len(People)):
+        # print(People[i])
+        People_token_dict[People[i]] = []
+    for i in range(len(Title_text)):
+        Title_token_dict[Title_text[i]] = []
+>>>>>>> upstream/master
     Year_dict = {}
     for i in range(len(Year)):
         Year_dict[str(Year[i])] = []
@@ -73,11 +140,15 @@ def get_index(file_name):
 
     for movie in movie_inf:
         # print(movie)
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
         for item in movie['Genre']:
             Genre_dict[item].append(movie['_id']['$oid'])
         Year_dict[movie['Year']].append(movie['_id']['$oid'])
         for item in movie['Title']:
+<<<<<<< HEAD
             Title_dict[item].append(movie['_id']['$oid'])
         for item in movie['people']:
             
@@ -90,6 +161,28 @@ def get_score(file_name):
     ratings = []
     with open(file_name, encoding='utf-8') as f:
         movie_inf = json.load(f)
+=======
+            Title_token_dict[item].append(movie['_id']['$oid'])
+        for item in movie['people']:
+            People_token_dict[item].append(movie['_id']['$oid'])
+    
+    with open('pkl_data/Title_token_dict.pkl','wb') as f:
+        pickle.dump(Title_token_dict,f)
+    with open('pkl_data/People_token_dict.pkl','wb') as f:
+        pickle.dump(People_token_dict,f)
+    with open('pkl_data/Genre_dict.pkl','wb') as f:
+        pickle.dump(Genre_dict,f)
+    with open('pkl_data/Year_dict.pkl','wb') as f:
+        pickle.dump(Year_dict,f)
+    with open('pkl_data/title_dict.pkl','wb') as f:
+        pickle.dump(title_dict,f)
+    with open('pkl_data/people_dict.pkl','wb') as f:
+        pickle.dump(people_dict,f)
+
+    ######################################## get_score()
+    votes = []
+    ratings = []
+>>>>>>> upstream/master
     dict_score = {}
     for movie in movie_inf:
         # print(movie.keys())
@@ -145,7 +238,14 @@ def get_score(file_name):
                 score2 = 0
         score = score1 + score2
         dict_score[movie['_id']['$oid']] = score
+<<<<<<< HEAD
     return dict_score
+=======
+    with open('pkl_data/dict_score.pkl','wb') as f:
+        pickle.dump(dict_score,f)
+    
+
+>>>>>>> upstream/master
 
 
 # def Retrieval(query, dict_score):
@@ -163,15 +263,20 @@ def get_score(file_name):
 
 def Preprocess(query):
     stemmer_porter = PorterStemmer()
+<<<<<<< HEAD
     
     query = query.lower()
     query = query.replace('-',' ')
+=======
+    query = query.lower()
+>>>>>>> upstream/master
     query = query.split(' ')
     stemmed_query = []
     for word in query:
         stemmed_query.append(stemmer_porter.stem(word))
     return stemmed_query
 
+<<<<<<< HEAD
 
 Title_dict, People_dict, Year_dict, Genre_dict = get_index('movies.json')
 dict_score= get_score('movies.json')
@@ -208,3 +313,8 @@ def get_title_dict(file_name):
             title_dict[movie_id] = title_text
     return title_dict
 
+=======
+if __name__=='__main__':
+    get_index('json_data/movies.json')
+    
+>>>>>>> upstream/master

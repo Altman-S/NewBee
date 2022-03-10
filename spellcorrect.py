@@ -1,6 +1,10 @@
 import re, collections
+<<<<<<< HEAD
 from nltk.stem.porter import PorterStemmer
 #import createindex.Preprocess as Preprocess
+=======
+ 
+>>>>>>> upstream/master
 def words(text): return re.findall('[a-z]+', text.lower()) 
  
 def train(features):
@@ -9,7 +13,11 @@ def train(features):
         model[f] += 1
     return model
  
+<<<<<<< HEAD
 #NWORDS = train(words(open('text.txt').read()))
+=======
+NWORDS = train(words(open('text.txt',encoding='utf-8').read()))
+>>>>>>> upstream/master
  
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
  
@@ -30,6 +38,7 @@ def correct(word):
     candidates = known([word]) or known(edits1(word)) or known_edits2(word) or [word]
     return max(candidates, key=NWORDS.get)
 
+<<<<<<< HEAD
 
 #texts = open('big.txt').read()
 def spellchecker(words):
@@ -61,3 +70,10 @@ with open('NWORDS.pkl', 'rb') as f:
     NWORDS = pickle.load(f)
 word =spellchecker("the dark nigt")
 print(word)
+=======
+word =correct("nigt")
+print(word)
+#texts = open('big.txt').read()
+#print(texts[:1000])
+
+>>>>>>> upstream/master

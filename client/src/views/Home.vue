@@ -1,71 +1,67 @@
 <template>
-  <div class="container">
-    <movie-card-container :movies="movies"></movie-card-container>
+  <div id="home">
+    <router-link :to="'/'" custom v-slot="{ href }">
+      <div class="logo">
+        <a :href="href"
+          ><img
+            src="../../public/logos/logo.png"
+            width="90"
+            height="55"
+            alt=""
+            hre
+        /></a>
+      </div>
+    </router-link>
+
+    <div class="background">
+      <img
+        class="unselectable"
+        src="../../public/logos/background.jpg"
+        width="2000"
+        height="1000"
+        alt=""
+      />
+    </div>
+
+    <!-- <div class="header"> -->
+      <search-bar></search-bar>
+    <!-- </div> -->
+
+    <div class="container">
+      <router-view v-slot="{ Component, route }">
+        <keep-alive>
+          <component
+            :is="Component"
+            :key="route.name"
+            v-if="route.meta.keepAlive"
+          />
+        </keep-alive>
+        <component
+          :is="Component"
+          :key="route.name"
+          v-if="!route.meta.keepAlive"
+        />
+      </router-view>
+    </div>
   </div>
-  <pagination
-    :total_page="total_page"
-    :page_number="current_page"
-    @changePage="change_page($event)"
-  ></pagination>
 </template>
 
 <script>
-import MovieCardContainer from "../components/MovieCardContainer.vue";
-import MovieCard from "../components/MovieCard.vue";
-import Pagination from "../components/Pagination.vue";
+import SearchBar from "../components/SearchBar.vue";
 
 export default {
   name: "Home",
   components: {
-    MovieCardContainer,
-    MovieCard,
-    Pagination,
-  },
-  created: function () {
-    fetch("/api/movies/")
-      .then((response) => response.json())
-      .then((data) => {
-        const movies = data.movies;
-        console.log(movies.length);
-        this.movies = movies;
-        this.total_number = data.total_number;
-        this.current_page = data.current_page;
-      });
-  },
-  data: function () {
-    return {
-      movies: null,
-      total_number: null,
-      current_page: null,
-      movies_per_page: 20,
-    };
-  },
-  methods: {
-    change_page(page) {
-      window.scrollTo(0, 0);
-      console.log(page);
-      const url = "api/movies/?page=" + page;
-      fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          const movies = data.movies;
-          console.log(movies.length);
-          this.movies = movies;
-          this.total_number = data.total_number;
-          this.current_page = data.current_page;
-        });
-    },
-  },
-  computed: {
-    total_page() {
-      return Math.ceil(this.total_number / this.movies_per_page);
-    },
+    SearchBar,
   },
 };
 </script>
 
-<style scoped>
-.container {
-  padding-bottom: 20px;
+<style>
+.logo {
+  margin: 0 auto;
+  left: 6%;
+  top: 1.6%;
+  position: fixed;
 }
 </style>

@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
-from API.db import get_movie_by_id, get_movies
+from API.db import get_movie_by_imdbID, get_movies, get_movies_by_oid
 from flask_cors import CORS
+from BM25 import *
 
 movies_api = Blueprint('movies_api', __name__, url_prefix='/api/movies')
 
@@ -12,11 +13,11 @@ Refer to the Flask-CORS documentation for more info on this
 CORS(movies_api)
 
 # get all movies on the home page
+DEFAULT_MOVIES_PER_PAGE = 20
 
 
 @movies_api.route('/', methods=['GET'])
 def api_get_movies():
-    DEFAULT_MOVIES_PER_PAGE = 20
     page = int(request.args.get('page', 1))
     print(page)
     movies, total_number = get_movies(
@@ -33,22 +34,45 @@ def api_get_movies():
 @movies_api.route('/search', methods=['GET'])
 def api_search_movie():
     filters = {}
-    title = request.args.get('title')
-    casts = request.args.getlist('cast')
-    genres = request.args.getlist('genre')
+    page = int(request.args.get('page', 1))
+    all = request.args.get('All')
+    title = request.args.get('Title')
+    celes = request.args.get('Celebrity')
+    genre = request.args.get('Genre')
+    year = request.args.get('Year')
+    if all:
+        filters['all'] = all
     if title:
         filters['title'] = title
-    if casts:
-        filters['casts'] = casts
-    if genres:
-        filters['genres'] = genres
-    return jsonify(filters), 200
+    if celes:
+        filters['celes'] = celes
+    if genre:
+        filters['genre'] = genre
+    if year:
+        filters['year'] = year
+    print(filters)
+    oid_list = get_oid_from_BM25(filters)
+    if oid_list:
+        print(len(oid_list))
+        movies, total_number = get_movies_by_oid(
+            oid_list, page, DEFAULT_MOVIES_PER_PAGE)
+        response = {
+            "movies": movies,
+            "total_number": total_number,
+            "current_page": page,
+            "response": 'success'
+        }
+    else:
+        response = {
+            "response": 'fail'
+        }
+    return jsonify(response), 200
 
 
 # get movie by ID
 @movies_api.route('/id/<id>', methods=['GET'])
 def api_get_movie_by_id(id):
-    movie = get_movie_by_id(id)
+    movie = get_movie_by_imdbID(id)
     if movie is None:
         return jsonify({
             "error": "Not found"
@@ -63,3 +87,17 @@ def api_get_movie_by_id(id):
                 "movie": movie,
             }
         ), 200
+
+
+def get_oid_from_BM25(filters):
+    print("Seaching")
+    oid_list = None
+    if 'title' in filters:
+        oid_list = search_title(filters['title'])
+    if 'celes' in filters:
+        oid_list = search_celebrity(filters['celes'])
+    if 'year' in filters:
+        oid_list = search_year(filters['year'])
+    if 'genre' in filters:
+        oid_list = search_genre(filters['genre'])
+    return oid_list
