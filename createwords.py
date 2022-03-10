@@ -14,5 +14,5 @@ def train(features):
 NWORDS = train(words(open('text.txt').read()))
 
 NWORDS=dict(NWORDS)
-with open('NWORDS.pkl', 'wb') as handle:
+with open('pkl_data/NWORDS.pkl', 'wb') as handle:
     pickle.dump(NWORDS, handle, protocol=pickle.HIGHEST_PROTOCOL)
