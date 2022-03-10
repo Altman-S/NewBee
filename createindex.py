@@ -173,17 +173,17 @@ def Preprocess(query):
     return stemmed_query
 
 
-Title_dict, People_dict, Year_dict, Genre_dict = get_index('movies.json')
-dict_score= get_score('movies.json')
+Title_dict, People_dict, Year_dict, Genre_dict = get_index('json_data/movies.json')
+dict_score= get_score('json_data/movies.json')
 #print(dict_score)
 
 #print(People_dict)
 import pickle
 
 
-with open('title.pkl', 'wb') as handle:
+with open('pkl_data/title.pkl', 'wb') as handle:
     pickle.dump(Title_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
-with open('people.pkl', 'wb') as handle:
+with open('pkl_data/people.pkl', 'wb') as handle:
     pickle.dump(People_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
 def get_title_list(file_name):
     with open(file_name, encoding='utf-8') as f:
