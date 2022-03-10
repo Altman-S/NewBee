@@ -7,7 +7,8 @@
           <div class="rightright">
             <h4 class="def">More</h4>
           </div>
-          <movie-card-container :movies="title_movies"></movie-card-container>
+          <movie-card-container :movies="title_movies" v-if="this.title_movies != 'fail'"></movie-card-container>
+          <div class="card" v-if="this.title_movies == null" style="color:red">No result</div>
         </div>
       </div>
       <div class="col-10">
@@ -16,7 +17,8 @@
           <div class="rightright">
             <h4 class="def">More</h4>
           </div>
-          <movie-card-container :movies="celes_movies"></movie-card-container>
+          <movie-card-container :movies="celes_movies" v-if="this.celes_movies != 'fail'"></movie-card-container>
+          <div class="card" v-if="this.celes_movies == null" style="color:red">No result</div>
         </div>
       </div>
       <div class="col-10">
@@ -25,17 +27,19 @@
           <div class="rightright">
             <h4 class="def">More</h4>
           </div>
-          <movie-card-container :movies="genre_movies"></movie-card-container>
+          <movie-card-container :movies="genre_movies" v-if="this.genre_movies != 'fail'"></movie-card-container>
+          <div class="card" v-if="this.genre_movies == null" style="color:red">No result</div>
         </div>
       </div>
       <div class="col-10">
-<!--        <div class="p-3 border bg-grey">-->
+        <!--        <div class="p-3 border bg-grey">-->
         <div class="bg-grey">
           <h4 class="abc">Year</h4>
           <div class="rightright">
             <h4 class="def">More</h4>
           </div>
-          <movie-card-container :movies="year_movies"></movie-card-container>
+          <movie-card-container :movies="year_movies" v-if="this.year_movies != 'fail'"></movie-card-container>
+          <div class="card" v-if="this.year_movies == null" style="color:red">No result</div>
         </div>
       </div>
     </div>
@@ -55,22 +59,19 @@ export default {
   created: function () {
     console.log("MovieAllPage created");
     this.$watch(
-        () => this.$route.query,
-        (newQuery, oldQuery) => {
-          this.search_params = {};
-          const query = this.$route.query;
-          if (Object.keys(query).length != 0) {
-            for (let key in query) {
-              this.search_params[key] = query[key];
-            }
-            this.search();
+      () => this.$route.query,
+      (newQuery, oldQuery) => {
+        this.search_params = {};
+        const query = this.$route.query;
+        if (Object.keys(query).length != 0) {
+          for (let key in query) {
+            this.search_params[key] = query[key];
           }
-        },
-        { immediate: true }
+          this.search();
+        }
+      },
+      { immediate: true }
     );
-
-    // To be deleted
-    this.search();
   },
   data: function () {
     return {
@@ -80,64 +81,40 @@ export default {
       genre_movies: null,
       year_movies: null,
       search_params: {},
-
     };
   },
   methods: {
     search() {
       console.log("Search");
-      // const searchURL = new URLSearchParams(this.search_params);
-      const searchURL = "Title=galaxy"
-      //   console.log(`${this.api}?${searchURL}`);
-      // fetch(`${this.api}?${searchURL}`)
+    //   const searchURL = new URLSearchParams(this.search_params);
       window.scrollTo(0, 0);
-
-      // get title_movies
-      fetch(`http://127.0.0.1:5000/api/movies/search?Title=galaxy`)
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.response == "success") {
-              this.title_movies = data.movies.slice(0, 3);
-
-            }
-          });
-
-      // get celes_movies
-      fetch(`http://127.0.0.1:5000/api/movies/search?Celebrity=galaxy`)
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.response == "success") {
-              this.celes_movies = data.movies.slice(0, 3);
-
-            }
-          });
-
-      // get celes_movies
-      fetch(`http://127.0.0.1:5000/api/movies/search?Genre=galaxy`)
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.response == "success") {
-              this.genre_movies = data.movies.slice(0, 3);
-
-            }
-          });
-
-      // get year_movies
-      fetch(`http://127.0.0.1:5000/api/movies/search?Year=galaxy`)
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.response == "success") {
-              this.year_movies = data.movies.slice(0, 3);
-
-            }
-          });
+      fetch(
+        `http://127.0.0.1:5000/api/movies/search?All=${this.search_params.All}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.response == "success") {
+            this.title_movies = data.movies.title
+            this.celes_movies = data.movies.celebrity
+            this.genre_movies = data.movies.genre
+            this.year_movies = data.movies.year
+          } else {
+            this.title_movies = "fail";
+          }
+        });
 
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
+.container {
+  top: 10%;
+  left: 13%;
+  position: absolute;
+}
+
 .abc {
   color: gold;
 }
@@ -154,5 +131,9 @@ export default {
 .rightright {
   float: right;
   display: inline;
+}
+
+.card {
+  background-color: rgba(150, 165, 179, 0.8);
 }
 </style>

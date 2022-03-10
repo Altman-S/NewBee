@@ -25,7 +25,7 @@ const routes = [
         },
         children:[
             {
-                path:'search',
+                path:'/search',
                 name: 'MovieListPage',
                 component:MovieListPage,
                 meta: {
@@ -54,9 +54,8 @@ const routes = [
                 path: '/searchAll',
                 name: 'MovieAllPage',
                 component: MovieAllPage,
-                props: true,
                 meta: {
-                    keepAlive: false
+                    keepAlive: true
                 }
             },
         ]

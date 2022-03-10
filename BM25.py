@@ -158,7 +158,7 @@ with open('pkl_data/People_token_dict.pkl', 'rb') as f:
     People_token_dict = pickle.load(f, encoding='bytes')
 with open('pkl_data/Genre_dict.pkl', 'rb') as f:
     Genre_dict = pickle.load(f, encoding='bytes')
-with open('Year_dict.pkl', 'rb') as f:
+with open('pkl_data/Year_dict.pkl', 'rb') as f:
     Year_dict = pickle.load(f, encoding='bytes')
 with open('pkl_data/dict_score.pkl', 'rb') as f:
     dict_score = pickle.load(f, encoding='bytes')

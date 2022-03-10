@@ -26,7 +26,7 @@
     <!-- <div class="header"> -->
     <search-bar></search-bar>
     <!-- </div> -->
-    <h3 class="result" v-if="this.$route.path == '/home/search'">
+    <h3 class="result" v-if="this.$route.path == '/search'">
       Results for '{{ Object.values(this.$route.query)[0] }}'
     </h3>
 

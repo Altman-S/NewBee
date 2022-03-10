@@ -35,7 +35,9 @@
           @keyup="get($event)"
         />
         <ul class="list-group">
-          <li class="list-group-item" v-for="data in myData">{{data.category}} | {{data.title}}</li>
+          <li class="list-group-item" v-for="data in myData">
+            {{ data.category }} | {{ data.title }}
+          </li>
         </ul>
         <div class="input-group-append">
           <button class="btn btn-primary" @click="search">
@@ -74,10 +76,17 @@ export default {
       if (result == false) {
         alert("Wrong input");
       } else {
-        this.$router.push({
-          path: "/home/search",
-          query: { [this.searchFilter]: this.searchText },
-        });
+        if (this.searchFilter == "All") {
+          this.$router.push({
+            path: "/searchAll",
+            query: { [this.searchFilter]: this.searchText },
+          });
+        }else{
+            this.$router.push({
+            path: "/search",
+            query: { [this.searchFilter]: this.searchText },
+          });
+        }
       }
     },
     changeFilter(filter) {
@@ -89,9 +98,9 @@ export default {
       if (e.keyCode === 38 || e.keyCode === 40) {
         return;
       }
-      this.myData = []
+      this.myData = [];
       // 限制频繁请求
-    //   this.throttle(this.getData, window);
+      //   this.throttle(this.getData, window);
     },
     getData() {
       fetch(`http://127.0.0.1:5000/api/movies/prompt?${this.searchText}`)
