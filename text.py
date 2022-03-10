@@ -1,6 +1,0 @@
-
-
-
-
-print("a test")
-
