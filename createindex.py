@@ -105,17 +105,17 @@ def get_index(file_name):
         for item in movie['people']:
             People_token_dict[item].append(movie['_id']['$oid'])
     
-    with open('Title_token_dict.pkl','wb') as f:
+    with open('/pkl_data/Title_token_dict.pkl','wb') as f:
         pickle.dump(Title_token_dict,f)
-    with open('People_token_dict.pkl','wb') as f:
+    with open('/pkl_data/People_token_dict.pkl','wb') as f:
         pickle.dump(People_token_dict,f)
-    with open('Genre_dict.pkl','wb') as f:
+    with open('/pkl_data/Genre_dict.pkl','wb') as f:
         pickle.dump(Genre_dict,f)
-    with open('Year_dict.pkl','wb') as f:
+    with open('/pkl_data/Year_dict.pkl','wb') as f:
         pickle.dump(Year_dict,f)
-    with open('title_dict.pkl','wb') as f:
+    with open('/pkl_data/title_dict.pkl','wb') as f:
         pickle.dump(title_dict,f)
-    with open('people_dict.pkl','wb') as f:
+    with open('/pkl_data/people_dict.pkl','wb') as f:
         pickle.dump(people_dict,f)
 
     ######################################## get_score()
