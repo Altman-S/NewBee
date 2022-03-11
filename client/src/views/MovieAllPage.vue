@@ -87,14 +87,11 @@ export default {
   created: function () {
     console.log("MovieAllPage created");
     this.$watch(
-      () => this.$route.query,
+      () => this.$route.query.All,
       (newQuery, oldQuery) => {
-        this.search_params = {};
-        const query = this.$route.query;
-        if (Object.keys(query).length != 0) {
-          for (let key in query) {
-            this.search_params[key] = query[key];
-          }
+        console.log(`${oldQuery}->${newQuery}`);
+        if (newQuery != undefined) {
+          this.search_params = newQuery;
           this.search();
         }
       },
@@ -108,17 +105,14 @@ export default {
       celes_movies: null,
       genre_movies: null,
       year_movies: null,
-      search_params: {},
+      search_params: "",
     };
   },
   methods: {
     search() {
       console.log("Search");
-      //   const searchURL = new URLSearchParams(this.search_params);
       window.scrollTo(0, 0);
-      fetch(
-        `http://127.0.0.1:5000/api/movies/search?All=${this.search_params.All}`
-      )
+      fetch(`http://127.0.0.1:5000/api/movies/search?All=${this.search_params}`)
         .then((response) => response.json())
         .then((data) => {
           if (data.response == "success") {

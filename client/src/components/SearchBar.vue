@@ -35,8 +35,8 @@
           @keyup="get($event)"
         />
         <ul class="list-group">
-          <li class="list-group-item" v-for="data in myData">
-            {{ data.category }} | {{ data.title }}
+          <li class="list-group-item" v-for="data in myData" @click="caa(data)">
+            {{ data }}
           </li>
         </ul>
         <div class="input-group-append">
@@ -69,6 +69,10 @@ export default {
     };
   },
   methods: {
+      caa(data){
+          console.log('aa')
+          this.searchText = data
+      },
     async search() {
       const searchURL =
         "/home/search?" + this.searchFilter + "=" + this.searchText;
@@ -77,14 +81,14 @@ export default {
         alert("Wrong input");
       } else {
         if (this.searchFilter == "All") {
-            console.log('search All')
+          console.log("search All");
           this.$router.push({
             path: "/searchAll",
             query: { [this.searchFilter]: this.searchText },
           });
-        }else{
-            console.log('search category')
-            this.$router.push({
+        } else {
+          console.log("search category");
+          this.$router.push({
             path: "/search",
             query: { [this.searchFilter]: this.searchText },
           });
@@ -102,20 +106,14 @@ export default {
       }
       this.myData = [];
       // 限制频繁请求
-      //   this.throttle(this.getData, window);
+      this.throttle(this.getData, window);
     },
     getData() {
-      fetch(`http://127.0.0.1:5000/api/movies/prompt?${this.searchText}`)
+      fetch(`http://127.0.0.1:5000/api/movies/check?input=${this.searchText}`)
         .then((response) => response.json())
         .then((data) => {
-          for (const [key, value] of Object.entries(data.prompt)) {
-            console.log(key);
-            this.myData.push({
-              category: key,
-              title: value[0].Title,
-              year: value[0].Year,
-              actors: value[0].Actors,
-            });
+          if (data.response == "success") {
+            this.myData.push(data.promp);
           }
         });
     },
@@ -123,7 +121,7 @@ export default {
       clearTimeout(method.tId);
       method.tId = setTimeout(function () {
         method.call(context);
-      }, 300);
+      }, 1000);
     },
   },
   validations: function () {
@@ -176,15 +174,15 @@ export default {
 }
 
 .list-group > li {
-  border-color: gray;
+  /* border-color: gray; */
   border-image: none;
   border-style: solid solid none;
   border-width: 1px 1px 0;
-  padding-left: 5px;
+  padding-left: 5px;    
 }
 
-.list-group > li:last-child {
-  border-bottom: 1px solid gray;
+.list-group > li:hover {
+  background-color: grey;
 }
 
 /*.form-control:focus + .list-group {

@@ -2,6 +2,8 @@ from flask import Blueprint, request, jsonify
 from API.db import get_movie_by_imdbID, get_movies, get_movies_by_oid
 from flask_cors import CORS
 from BM25 import *
+from spellcorrect_new import *
+
 
 movies_api = Blueprint('movies_api', __name__, url_prefix='/api/movies')
 
@@ -126,22 +128,41 @@ def get_oid_from_BM25(filters):
     return oid_list
 
 
-@movies_api.route('/prompt', methods=['GET'])
-def api_input_prompt():
+@movies_api.route('/check', methods=['GET'])
+def api_spell_check():
     input = request.args.get('input')
-    print(input)
-    oid = {'title': '62235b3999820f460dbdd37e', 'genre': '62235b3999820f460dbdd37e',
-           'year': '62235b3999820f460dbdd37e', 'celebs': '62235b3999820f460dbdd37e'}
-    output = {}
-    for category, oid in oid.items():
-        output[category] = get_movies_by_oid([oid], 1, 1)[0]
-    if output:
-        response = {
-            "prompt": output,
-            "response": 'success'
-        }
-    else:
-        response = {
-            "response": 'fail'
-        }
-    return jsonify(response), 200
+    promp = spellchecker(input)
+    print(f"check {input} -> {promp}")
+    if promp:
+        return jsonify(
+            {
+                "promp":promp,
+                "response":"success"
+            }
+        )
+    return jsonify(
+            {
+                "response":"fail"
+            }
+        )
+
+# search promp function (discarded)
+# @movies_api.route('/promp', methods=['GET'])
+# def api_input_prompt():
+#     input = request.args.get('input')
+#     print(input)
+#     oid = {'title': '62235b3999820f460dbdd37e', 'genre': '62235b3999820f460dbdd37e',
+#            'year': '62235b3999820f460dbdd37e', 'celebs': '62235b3999820f460dbdd37e'}
+#     output = {}
+#     for category, oid in oid.items():
+#         output[category] = get_movies_by_oid([oid], 1, 1)[0]
+#     if output:
+#         response = {
+#             "prompt": output,
+#             "response": 'success'
+#         }
+#     else:
+#         response = {
+#             "response": 'fail'
+#         }
+#     return jsonify(response), 200

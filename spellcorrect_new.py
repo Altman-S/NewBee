@@ -57,5 +57,5 @@ def Preprocess(query):
 
 with open('pkl_data/NWORDS.pkl', 'rb') as f:
     NWORDS = pickle.load(f)
-word =spellchecker("the dark nigt")
-print(word)
+# word =spellchecker("the dark nigt")
+# print(word)

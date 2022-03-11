@@ -55,7 +55,7 @@ const routes = [
                 name: 'MovieAllPage',
                 component: MovieAllPage,
                 meta: {
-                    keepAlive: true
+                    keepAlive: false
                 }
             },
         ]

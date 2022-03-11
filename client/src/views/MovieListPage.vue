@@ -64,24 +64,25 @@ export default {
           this.movies = movies;
           this.current_page = data.current_page;
         });
-      
     },
     search() {
-      const searchURL = new URLSearchParams(this.search_params);
-      //   console.log(`${this.api}?${searchURL}`);
-      // fetch(`${this.api}?${searchURL}`)
-      window.scrollTo(0, 0);
-      fetch(`http://127.0.0.1:5000/api/movies/search?${searchURL}`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.response == "success") {
-            this.movies = data.movies;
-            this.total_number = data.total_number;
-            this.current_page = data.current_page;
-          } else {
-            this.$router.replace({ path: "/notfound/1" });
-          }
-        });
+      if (this.search_params.All==undefined) {
+        const searchURL = new URLSearchParams(this.search_params);
+          console.log(`${this.api}?${searchURL}`);
+        // fetch(`${this.api}?${searchURL}`)
+        window.scrollTo(0, 0);
+        fetch(`http://127.0.0.1:5000/api/movies/search?${searchURL}`)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.response == "success") {
+              this.movies = data.movies;
+              this.total_number = data.total_number;
+              this.current_page = data.current_page;
+            } else {
+              this.$router.replace({ path: "/notfound/1" });
+            }
+          });
+      }
     },
   },
   computed: {
@@ -89,6 +90,7 @@ export default {
       return Math.ceil(this.total_number / this.movies_per_page);
     },
   },
+  
 };
 </script>
 
