@@ -77,11 +77,13 @@ export default {
         alert("Wrong input");
       } else {
         if (this.searchFilter == "All") {
+            console.log('search All')
           this.$router.push({
             path: "/searchAll",
             query: { [this.searchFilter]: this.searchText },
           });
         }else{
+            console.log('search category')
             this.$router.push({
             path: "/search",
             query: { [this.searchFilter]: this.searchText },
