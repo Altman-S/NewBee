@@ -5,7 +5,7 @@
         <div class="bg-grey">
           <h4 class="abc">Title</h4>
           <div class="rightright">
-            <router-link :to="`/search?Title=${search_params.All}`">
+            <router-link :to="`/search?Title=${search_params}`">
               <h4 class="def">More</h4>
             </router-link>
           </div>
@@ -22,7 +22,7 @@
         <div class="bg-grey">
           <h4 class="abc">Celebrity</h4>
           <div class="rightright">
-            <router-link :to="`/search?Celebrity=${search_params.All}`">
+            <router-link :to="`/search?Celebrity=${search_params}`">
               <h4 class="def">More</h4>
             </router-link>
           </div>
@@ -39,7 +39,7 @@
         <div class="bg-grey">
           <h4 class="abc">Genre</h4>
           <div class="rightright">
-            <router-link :to="`/search?Genre=${search_params.All}`">
+            <router-link :to="`/search?Genre=${search_params}`">
               <h4 class="def">More</h4>
             </router-link>
           </div>
@@ -57,7 +57,7 @@
         <div class="bg-grey">
           <h4 class="abc">Year</h4>
           <div class="rightright">
-            <router-link :to="`/search?Year=${search_params.All}`">
+            <router-link :to="`/search?Year=${search_params}`">
               <h4 class="def">More</h4>
             </router-link>
           </div>
