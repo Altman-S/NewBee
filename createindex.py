@@ -1,5 +1,4 @@
 import json
-# from matplotlib.pyplot import bar_label, title
 from nltk.stem.porter import PorterStemmer
 from numpy import *
 import numpy as np
