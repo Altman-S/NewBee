@@ -28,34 +28,41 @@ def known(words): return set(w for w in words if w in NWORDS)
  
 def correct(word):
     candidates = known([word]) or known(edits1(word)) or known_edits2(word) or [word]
-    return max(candidates, key=NWORDS.get)
+    c = list(candidates)
+    top = max(candidates, key=NWORDS.get)
+    c.remove(top)
+    c.insert(0, top)
+    return c
 
 def spellchecker(words):
-    wordlist = Preprocess(words)
+    # wordlist = Preprocess(words)
+    wordlist = words.split(' ')
     wordlist_= []
-    for word in wordlist:
-        word_ = correct(word)
-        wordlist_.append(word_)
+    # for word in wordlist:
+        # word_ = correct(word)
+        # wordlist_.append(word_)
     res = ""
-    for word in wordlist_:
-        res+=word+" "
-    return res
+    word_ = correct(wordlist[-1])
+    return word_
+    # for word in wordlist_:
+        # res+=word+" "
+    # return res
 
 import pickle
 
 def Preprocess(query):
-    stemmer_porter = PorterStemmer()
+    # stemmer_porter = PorterStemmer()
 
     query = query.lower()
     query = query.replace('-',' ')
     query = query.split(' ')
     stemmed_query = []
-    for word in query:
-        stemmed_query.append(stemmer_porter.stem(word))
-    return stemmed_query
+    # for word in query:
+        # stemmed_query.append(stemmer_porter.stem(word))
+    return query
 
 
 with open('pkl_data/NWORDS.pkl', 'rb') as f:
     NWORDS = pickle.load(f)
-# word =spellchecker("the dark nigt")
-# print(word)
+word =spellchecker("nigt")
+print(word)

@@ -10,5 +10,7 @@ module.exports = {
                 logLevel: 'debug'
             },
         }
-    }
+    },
+
+    assetsDir: 'static'
 }

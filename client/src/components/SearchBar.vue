@@ -36,7 +36,7 @@
         />
         <ul class="list-group">
           <li class="list-group-item" v-for="data in myData" @click="caa(data)">
-            {{ data }}
+            {{ prev_txt + " " + data }}
           </li>
         </ul>
         <div class="input-group-append">
@@ -63,16 +63,17 @@ export default {
       searchText: "",
       searchFilter: "All",
       filter_list: ["All", "Title", "Year", "Genre", "Celebrity"],
+      prev_txt: "",
       myData: [],
       tt: "",
       now: -1,
     };
   },
   methods: {
-      caa(data){
-          console.log('aa')
-          this.searchText = data
-      },
+    caa(data) {
+      //   console.log('aa')
+    //   this.searchText = data;
+    },
     async search() {
       const searchURL =
         "/home/search?" + this.searchFilter + "=" + this.searchText;
@@ -106,16 +107,18 @@ export default {
       }
       this.myData = [];
       // 限制频繁请求
-      this.throttle(this.getData, window);
+    //   this.throttle(this.getData, window);
     },
     getData() {
+        this.searchText = this.searchText.trim()
       fetch(`http://127.0.0.1:5000/api/movies/check?input=${this.searchText}`)
         .then((response) => response.json())
         .then((data) => {
           if (data.response == "success") {
-            this.myData.push(data.promp);
+            this.myData = data.promp;
           }
         });
+      this.prev_txt = this.searchText.slice(this.searchText.lastIndexOf(" "));
     },
     throttle(method, context) {
       clearTimeout(method.tId);
@@ -178,7 +181,7 @@ export default {
   border-image: none;
   border-style: solid solid none;
   border-width: 1px 1px 0;
-  padding-left: 5px;    
+  padding-left: 5px;
 }
 
 .list-group > li:hover {

@@ -29,7 +29,7 @@ const routes = [
                 name: 'MovieListPage',
                 component:MovieListPage,
                 meta: {
-                    keepAlive: true
+                    keepAlive: false
                 },
             },
             {
