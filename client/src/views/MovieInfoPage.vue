@@ -50,7 +50,8 @@ export default {
   created: function () {
     console.log("MovieInfoPage created");
     const movie_id = this.id;
-    fetch(`${this.api}${movie_id}`)
+    console.log(`${this.api}${movie_id}`)
+    fetch(`http://104.155.34.47:5000/api/movies/id/${movie_id}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.response == "success") {
