@@ -112,7 +112,7 @@ export default {
     search() {
       console.log("Search");
       window.scrollTo(0, 0);
-      fetch(`http://127.0.0.1:5000/api/movies/search?All=${this.search_params}`)
+      fetch(`/api/movies/search?All=${this.search_params}`)
         .then((response) => response.json())
         .then((data) => {
           if (data.response == "success") {

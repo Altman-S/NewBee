@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from API.db import get_movie_by_imdbID, get_movies, get_movies_by_oid
-from flask_cors import CORS
+# from flask_cors import CORS
 from BM25 import *
 from spellcorrect_new import *
 
@@ -12,7 +12,7 @@ In a production environment, you should only allow cross-origin requests from th
 domain where the front-end application is hosted. 
 Refer to the Flask-CORS documentation for more info on this
 """
-CORS(movies_api)
+# CORS(movies_api)
 
 # get all movies on the home page
 DEFAULT_MOVIES_PER_PAGE = 20

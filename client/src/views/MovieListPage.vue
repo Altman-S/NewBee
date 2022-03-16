@@ -54,8 +54,8 @@ export default {
       this.search_params["page"] = page;
       const searchURL = new URLSearchParams(this.search_params);
       console.log(`${this.api}?${searchURL}`);
-      // fetch(`${this.api}?${searchURL}`)
-      fetch(`http://127.0.0.1:5000/api/movies/search?${searchURL}`)
+      fetch(`${this.api}?${searchURL}`)
+        //   fetch(`/api/movies/search?${searchURL}`)
         .then((response) => response.json())
         .then((data) => {
           console.log(data.response);
@@ -66,12 +66,11 @@ export default {
         });
     },
     search() {
-      if (this.search_params.All==undefined) {
+      if (this.search_params.All == undefined) {
         const searchURL = new URLSearchParams(this.search_params);
-          console.log(`${this.api}?${searchURL}`);
-        // fetch(`${this.api}?${searchURL}`)
+        console.log(`${this.api}?${searchURL}`);
         window.scrollTo(0, 0);
-        fetch(`http://127.0.0.1:5000/api/movies/search?${searchURL}`)
+        fetch(`${this.api}?${searchURL}`)
           .then((response) => response.json())
           .then((data) => {
             if (data.response == "success") {
@@ -90,7 +89,6 @@ export default {
       return Math.ceil(this.total_number / this.movies_per_page);
     },
   },
-  
 };
 </script>
 

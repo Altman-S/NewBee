@@ -2,7 +2,7 @@ from flask import Flask
 from bson.json_util import ObjectId
 import json
 import os
-from flask_cors import CORS
+# from flask_cors import CORS
 
 
 class MyEncoder(json.JSONEncoder):
