@@ -36,7 +36,7 @@
         />
         <ul class="list-group">
           <li class="list-group-item" v-for="data in myData" @click="caa(data)">
-            {{ prev_txt + " " + data }}
+            {{ data }}
           </li>
         </ul>
         <div class="input-group-append">
@@ -59,11 +59,11 @@ export default {
   name: "Search Bar",
   data: function () {
     return {
+      api: "api/movies/check",
       v$: useValidate(),
       searchText: "",
       searchFilter: "All",
       filter_list: ["All", "Title", "Year", "Genre", "Celebrity"],
-      prev_txt: "",
       myData: [],
       tt: "",
       now: -1,
@@ -72,7 +72,7 @@ export default {
   methods: {
     caa(data) {
       //   console.log('aa')
-    //   this.searchText = data;
+      this.searchText = data;
     },
     async search() {
       const searchURL =
@@ -110,15 +110,14 @@ export default {
     //   this.throttle(this.getData, window);
     },
     getData() {
-        this.searchText = this.searchText.trim()
-      fetch(`http://127.0.0.1:5000/api/movies/check?input=${this.searchText}`)
+      this.searchText = this.searchText.trim();
+      fetch(`${this.api}?input=${this.searchText}`)
         .then((response) => response.json())
         .then((data) => {
           if (data.response == "success") {
             this.myData = data.promp;
           }
         });
-      this.prev_txt = this.searchText.slice(this.searchText.lastIndexOf(" "));
     },
     throttle(method, context) {
       clearTimeout(method.tId);
@@ -159,10 +158,9 @@ export default {
   position: fixed;
 }
 .homePage {
-  left: 20%;
-  top: 3%;
-  width: 50%;
-  /* need fix this bug */
+  width: 60%;
+  left: 15%;
+  top: 40px;
   position: absolute;
 }
 .list-group {

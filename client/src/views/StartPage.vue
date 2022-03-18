@@ -1,28 +1,7 @@
 <template>
-  <div>
-    <div class="background">
-      <img
-        class="unselectable"
-        src="../../public/logos/background.jpg"
-        width="100%"
-        height="100%"
-        alt=""
-      />
-    </div>
-    <div class="logo">
-      <img
-        src="../../public/logos/logo.png"
-        width="100%"
-        height="100%"
-        alt=""
-      />
-    </div>
-    <div class="abc">
-      <!-- <search-bar></search-bar> -->
-    </div>
-    <search-bar></search-bar>
-    <!-- <dropdown></dropdown> -->
-  </div>
+  <img src="../../public/logos/logo.png" class="logo" />
+  <search-bar></search-bar>
+  <!-- <dropdown></dropdown> -->
 </template>
 
 <script>
@@ -46,28 +25,14 @@ export default {
   border-radius: 0.25rem;
 }
 
-.background {
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  position: fixed;
-}
-
 .logo {
   margin: 0 auto;
-  left: 35%;
-  top: 23%;
-  height: 26%;
-  width: 28%;
+  left: 39%;
+  top: 27%;
   position: fixed;
+  width: 300px;
+  height: 225px;
+  alt: "logo";
 }
 
-.unselectable {
-  user-drag: none;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-drag: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-}
 </style>

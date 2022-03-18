@@ -43,7 +43,8 @@ def spellchecker(words):
         # wordlist_.append(word_)
     res = ""
     word_ = correct(wordlist[-1])
-    return word_
+    print(word_[:1])
+    return word_[:1]
     # for word in wordlist_:
         # res+=word+" "
     # return res

@@ -1,5 +1,4 @@
 <template>
-  <div class="container overflow-hidden">
     <div class="row gy-5">
       <div class="col-10">
         <div class="bg-grey">
@@ -53,7 +52,6 @@
         </div>
       </div>
       <div class="col-10">
-        <!--        <div class="p-3 border bg-grey">-->
         <div class="bg-grey">
           <h4 class="abc">Year</h4>
           <div class="rightright">
@@ -71,7 +69,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -112,7 +109,7 @@ export default {
     search() {
       console.log("Search");
       window.scrollTo(0, 0);
-      fetch(`/api/movies/search?All=${this.search_params}`)
+      fetch(`${this.api}?All=${this.search_params}`)
         .then((response) => response.json())
         .then((data) => {
           if (data.response == "success") {
@@ -131,9 +128,8 @@ export default {
 
 <style scoped>
 .container {
-  top: 10%;
-  left: 13%;
-  position: absolute;
+  left: 4%;
+  position: relative;
 }
 
 .abc {

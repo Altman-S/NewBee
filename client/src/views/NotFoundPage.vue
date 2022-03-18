@@ -20,22 +20,20 @@ export default {
 
 
 <style scoped>
-.background {
+/* .background {
   width: 100%;
   height: 100%;
   z-index: -1;
   position: fixed;
-  /* background-color: aqua; */
   background: rgba(255, 255, 255, .);
-}
+} */
 .content1 {
   text-align: center; /*让div内部文字居中*/
   color: red;
   width: 500px;
-  height: 400px;
   margin: auto;
-  position: absolute;
-  top: -10%;
+  position: relative;
+  top: 40px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -44,10 +42,9 @@ export default {
   text-align: center; /*让div内部文字居中*/
   color: white;
   width: 1000px;
-  height: 350px;
   margin: auto;
-  position: absolute;
-  top: 0;
+  position: relative;
+  top: 80px;
   left: 0;
   right: 0;
   bottom: 0;

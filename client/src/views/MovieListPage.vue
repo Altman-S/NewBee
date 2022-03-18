@@ -1,11 +1,13 @@
 <template>
-  <div class="moviecardcontainer">
-    <movie-card-container :movies="movies"></movie-card-container>
-    <pagination
-      :total_page="total_page"
-      :current_page="current_page"
-      @changePage="change_page($event)"
-    ></pagination>
+  <div class="row gy-5">
+    <div class="col-10">
+      <movie-card-container :movies="movies"></movie-card-container>
+      <pagination
+        :total_page="total_page"
+        :current_page="current_page"
+        @changePage="change_page($event)"
+      ></pagination>
+    </div>
   </div>
 </template>
 
@@ -40,7 +42,7 @@ export default {
   },
   data: function () {
     return {
-      api: "api/movies/search",
+      api: "/api/movies/search",
       movies: null,
       total_number: null,
       current_page: 1,
@@ -93,15 +95,4 @@ export default {
 </script>
 
 <style>
-.background {
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  position: fixed;
-}
-.moviecardcontainer {
-  top: 16%;
-  left: 8%;
-  position: absolute;
-}
 </style>

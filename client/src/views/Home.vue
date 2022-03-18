@@ -1,50 +1,54 @@
 <template>
-  <div id="home">
-    <router-link :to="'/'" custom v-slot="{ href }">
+  <div class="home">
+    <div class="header">
       <div class="logo">
-        <a :href="href"
-          ><img
-            src="../../public/logos/logo.png"
-            width="120"
-            height="55"
-            alt=""
-            hre
-        /></a>
+        <router-link :to="'/'" custom v-slot="{ href }">
+          <a :href="href"
+            ><img
+              src="../../public/logos/logo.png"
+              width="150"
+              height="112"
+              alt=""
+          /></a>
+        </router-link>
       </div>
-    </router-link>
-
-    <div class="background">
-      <img
-        class="unselectable"
-        src="../../public/logos/background.jpg"
-        width="2000"
-        height="1000"
-        alt=""
-      />
+      <search-bar></search-bar>
     </div>
-
-    <!-- <div class="header"> -->
-    <search-bar></search-bar>
-    <!-- </div> -->
-    <h3 class="result" v-if="this.$route.path == '/search'">
-      Results for '{{ Object.values(this.$route.query)[0] }}'
-    </h3>
-
-    <div>
-      <router-view v-slot="{ Component, route }">
-        <keep-alive>
+    <div
+      :class="{
+        resultpage:
+          this.$route.path == '/search' || this.$route.path == '/searchAll',
+        infopage:
+          this.$route.path != '/search' && this.$route.path != '/searchAll',
+      }"
+    >
+      <h3
+        class="result"
+        v-if="this.$route.path == '/search' || this.$route.path == '/searchAll'"
+      >
+        Results for '{{ Object.values(this.$route.query)[0] }}'
+      </h3>
+      <div
+        :class="{
+          container:
+            this.$route.path == '/search' || this.$route.path == '/searchAll',
+        }"
+      >
+        <router-view v-slot="{ Component, route }">
+          <keep-alive>
+            <component
+              :is="Component"
+              :key="route.name"
+              v-if="route.meta.keepAlive"
+            />
+          </keep-alive>
           <component
             :is="Component"
             :key="route.name"
-            v-if="route.meta.keepAlive"
+            v-if="!route.meta.keepAlive"
           />
-        </keep-alive>
-        <component
-          :is="Component"
-          :key="route.name"
-          v-if="!route.meta.keepAlive"
-        />
-      </router-view>
+        </router-view>
+      </div>
     </div>
   </div>
 </template>
@@ -60,17 +64,29 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.header {
+  background-color: aqua;
+}
+.resultpage {
+  top: 100px;
+  position: relative;
+}
 .logo {
   margin: 0 auto;
-  left: 9%;
-  top: 1.6%;
+  left: 30px;
+  top: 3px;
   position: absolute;
 }
 .result {
   color: aliceblue;
-  left: 10%;
-  top: 10%;
+  left: 15%;
   position: absolute;
+}
+.container {
+  left: 13%;
+  top: 50px;
+  position: absolute;
+  margin: 0%;
 }
 </style>
