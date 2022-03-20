@@ -131,20 +131,29 @@ def get_oid_from_BM25(filters):
 @movies_api.route('/check', methods=['GET'])
 def api_spell_check():
     input = request.args.get('input')
-    promp_list = [' '.join(tuple) for tuple in spellchecker(input)]
-    print(f"check {input} -> {promp_list}")
-    if promp_list:
+    if len(input) > 0:
+        promp_list = [' '.join(tuple) for tuple in spellchecker(input)]
+        print(f"check {input} -> {promp_list}")
+        if promp_list:
+            if len(promp_list) > 8:
+                promp = promp_list[:8]
+            else:
+                promp = promp_list
+            return jsonify(
+                {
+                    "promp": promp,
+                    "response": "success"
+                }
+            )
         return jsonify(
             {
-                "promp":promp_list,
-                "response":"success"
+                "response": "fail"
             }
         )
-    return jsonify(
-            {
-                "response":"fail"
-            }
-        )
+    else:
+        return jsonify({
+            "response": 'empty input'
+        })
 
 # search promp function (discarded)
 # @movies_api.route('/promp', methods=['GET'])
