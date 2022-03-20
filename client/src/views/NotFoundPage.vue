@@ -33,7 +33,7 @@ export default {
   width: 500px;
   margin: auto;
   position: relative;
-  top: 40px;
+  top: 140px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -44,7 +44,7 @@ export default {
   width: 1000px;
   margin: auto;
   position: relative;
-  top: 80px;
+  top: 160px;
   left: 0;
   right: 0;
   bottom: 0;

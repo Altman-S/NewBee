@@ -107,7 +107,7 @@ export default {
       }
       this.myData = [];
       // 限制频繁请求
-    //   this.throttle(this.getData, window);
+      this.throttle(this.getData, window);
     },
     getData() {
       this.searchText = this.searchText.trim();

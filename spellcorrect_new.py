@@ -1,5 +1,7 @@
 import re, collections
 from nltk.stem.porter import PorterStemmer
+import itertools
+
 #import createindex.Preprocess as Preprocess
 def words(text): return re.findall('[a-z]+', text.lower()) 
  
@@ -37,23 +39,14 @@ def correct(word):
 def spellchecker(words):
     # wordlist = Preprocess(words)
     wordlist = words.split(' ')
-    wordlist_= []
-    # for word in wordlist:
-        # word_ = correct(word)
-        # wordlist_.append(word_)
-    res = ""
-    word_ = correct(wordlist[-1])
-    print(word_[:1])
-    return word_[:1]
-    # for word in wordlist_:
-        # res+=word+" "
-    # return res
+    word_ = [correct(word) for word in wordlist]
+    promp_list = [element for element in itertools.product(*word_)]
+    return promp_list
 
 import pickle
 
 def Preprocess(query):
     # stemmer_porter = PorterStemmer()
-
     query = query.lower()
     query = query.replace('-',' ')
     query = query.split(' ')
@@ -65,3 +58,5 @@ def Preprocess(query):
 
 with open('pkl_data/NWORDS.pkl', 'rb') as f:
     NWORDS = pickle.load(f)
+promp_list = [' '.join(tuple) for tuple in spellchecker('spder man')]
+print(promp_list)
