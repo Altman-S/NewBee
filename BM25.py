@@ -58,12 +58,11 @@ class BM25:
 
 
 def search_title(query):
-    query = Preprocess(query)[0]
-    query_tokens = query.split()
+    query = Preprocess(query)
     docs = []
     docs_dict = {}
     try:
-        for token in query_tokens:
+        for token in query:
             ids = Title_token_dict[token]
             for id in ids:
                 title = title_dict[id]
@@ -72,7 +71,7 @@ def search_title(query):
                     docs.append(title)
                     docs_dict[' '.join(title)]=id
         bm = BM25(docs)
-        score = bm.score_all(query_tokens)
+        score = bm.score_all(query)
         score_index = {}
         score_max = max(score)
         score_min = min(score)
@@ -119,12 +118,11 @@ def search_genre(genre):
 
 
 def search_celebrity(query):
-    query = Preprocess(query)[0]
-    query_tokens = query.split()
+    query = Preprocess(query)
     docs = []
     docs_dict = {}
     try:
-        for token in query_tokens:
+        for token in query:
             ids = People_token_dict[token]
             for id in ids:
                 people = people_dict[id]
@@ -134,7 +132,7 @@ def search_celebrity(query):
                     docs.append(people)
                     docs_dict[' '.join(people)] = id
         bm = BM25(docs)
-        score = bm.score_all(query_tokens)
+        score = bm.score_all(query)
         score_index = {}
         for i in range(len(score)):
             score_index[i] = score[i]
