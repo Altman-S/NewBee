@@ -42,6 +42,7 @@ def api_search_movie():
     celes = request.args.get('Celebrity')
     genre = request.args.get('Genre')
     year = request.args.get('Year')
+    plot = request.args.get('Plot')
     if all:
         filters['all'] = all
     if title:
@@ -52,6 +53,8 @@ def api_search_movie():
         filters['genre'] = genre
     if year:
         filters['year'] = year
+    if plot:
+        filters['plot'] = plot
     print(filters)
     oid_list = get_oid_from_BM25(filters)
     if oid_list:
@@ -125,6 +128,9 @@ def get_oid_from_BM25(filters):
         oid_list = search_year(filters['year'])
     if 'genre' in filters:
         oid_list = search_genre(filters['genre'])
+    if 'plot' in filters:
+        print(f"filters={filters}")
+        oid_list = search_plot(filters['plot'])
     return oid_list
 
 

@@ -58,8 +58,7 @@ class BM25:
 
 
 def search_title(query):
-    query = Preprocess(query)
-    query_tokens = query.split()
+    query_tokens = Preprocess(query)
     docs = []
     docs_dict = {}
     try:
@@ -119,8 +118,7 @@ def search_genre(genre):
 
 
 def search_celebrity(query):
-    query = Preprocess(query)
-    query_tokens = query.split()
+    query_tokens = Preprocess(query)
     docs = []
     docs_dict = {}
     try:
@@ -151,8 +149,6 @@ def search_celebrity(query):
 
 def search_plot(query):
     query_tokens = Preprocess(query)
-    print(query_tokens)
-    #query_tokens = query.split()
     docs = []
     docs_dict = {}
     try:

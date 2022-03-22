@@ -58,5 +58,5 @@ def Preprocess(query):
 
 with open('pkl_data/NWORDS.pkl', 'rb') as f:
     NWORDS = pickle.load(f)
-promp_list = [' '.join(tuple) for tuple in spellchecker('spder man')]
-print(promp_list)
+# promp_list = [' '.join(tuple) for tuple in spellchecker('spder man')]
+# print(promp_list)

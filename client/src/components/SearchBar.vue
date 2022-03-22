@@ -6,7 +6,7 @@
     }"
   >
     <div class="container d-flex justify-content-center">
-      <div class="input-group mb-3">
+      <div class="input-group mb-3" v-clickOutside="toggle_droplist">
         <div class="dropdown">
           <button
             class="btn btn-secondary dropdown-toggle"
@@ -34,7 +34,7 @@
           @keydown.enter="search"
           @keyup="get($event)"
         />
-        <ul class="list-group">
+        <ul class="list-group" id="list-group">
           <li class="list-group-item" v-for="data in myData" @click="caa(data)">
             {{ data }}
           </li>
@@ -55,8 +55,29 @@ import useValidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { validate_year } from "./Validators.js";
 
+const clickOutside = {
+  beforeMount: (el, binding) => {
+    el.clickOutsideEvent = (event) => {
+      // here I check that click was outside the el and his children
+      if (!(el == event.target || el.contains(event.target))) {
+        // and if it did, call method provided in attribute value
+        binding.value(false);
+      } else {
+        binding.value(true);
+      }
+    };
+    document.addEventListener("click", el.clickOutsideEvent);
+  },
+  unmounted: (el) => {
+    document.removeEventListener("click", el.clickOutsideEvent);
+  },
+};
+
 export default {
   name: "Search Bar",
+  directives: {
+    clickOutside,
+  },
   data: function () {
     return {
       api: "api/movies/check",
@@ -67,11 +88,22 @@ export default {
       myData: [],
       tt: "",
       now: -1,
+      listgroup: null,
     };
   },
+  mounted: function () {
+    // console.log("mounteded search bar");
+    this.listgroup = document.getElementById("list-group");
+  },
   methods: {
+    toggle_droplist(show) {
+      if (!show) {
+        this.listgroup.style.display = "none";
+      } else {
+        this.listgroup.style.display = "block";
+      }
+    },
     caa(data) {
-      //   console.log('aa')
       this.searchText = data;
     },
     async search() {
@@ -101,6 +133,7 @@ export default {
       this.searchText = "";
     },
     get(e) {
+      this.listgroup.style.display = "block";
       // 请求限制 按了上下箭头
       if (e.keyCode === 38 || e.keyCode === 40) {
         return;
@@ -172,6 +205,7 @@ export default {
   padding: 0;
   position: absolute;
   width: 100%;
+  z-index: 2;
 }
 
 .list-group > li {
